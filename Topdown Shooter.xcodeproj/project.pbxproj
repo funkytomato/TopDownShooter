@@ -16,6 +16,15 @@
 		A835E72F1F20E0A200904228 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A835E72E1F20E0A200904228 /* Assets.xcassets */; };
 		A835E7321F20E0A200904228 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A835E7301F20E0A200904228 /* LaunchScreen.storyboard */; };
 		A835E73D1F20E0A200904228 /* Topdown_ShooterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A835E73C1F20E0A200904228 /* Topdown_ShooterTests.swift */; };
+		A835E74F1F20E1FB00904228 /* sfx_laser1.ogg in Resources */ = {isa = PBXBuildFile; fileRef = A835E7481F20E1FB00904228 /* sfx_laser1.ogg */; };
+		A835E7501F20E1FB00904228 /* sfx_laser2.ogg in Resources */ = {isa = PBXBuildFile; fileRef = A835E7491F20E1FB00904228 /* sfx_laser2.ogg */; };
+		A835E7511F20E1FB00904228 /* sfx_lose.ogg in Resources */ = {isa = PBXBuildFile; fileRef = A835E74A1F20E1FB00904228 /* sfx_lose.ogg */; };
+		A835E7521F20E1FB00904228 /* sfx_shieldDown.ogg in Resources */ = {isa = PBXBuildFile; fileRef = A835E74B1F20E1FB00904228 /* sfx_shieldDown.ogg */; };
+		A835E7531F20E1FB00904228 /* sfx_shieldUp.ogg in Resources */ = {isa = PBXBuildFile; fileRef = A835E74C1F20E1FB00904228 /* sfx_shieldUp.ogg */; };
+		A835E7541F20E1FB00904228 /* sfx_twoTone.ogg in Resources */ = {isa = PBXBuildFile; fileRef = A835E74D1F20E1FB00904228 /* sfx_twoTone.ogg */; };
+		A835E7551F20E1FB00904228 /* sfx_zap.ogg in Resources */ = {isa = PBXBuildFile; fileRef = A835E74E1F20E1FB00904228 /* sfx_zap.ogg */; };
+		A835E7591F20E23100904228 /* kenvector_future_thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A835E7571F20E23100904228 /* kenvector_future_thin.ttf */; };
+		A835E75A1F20E23100904228 /* kenvector_future.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A835E7581F20E23100904228 /* kenvector_future.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +51,15 @@
 		A835E7381F20E0A200904228 /* Topdown ShooterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Topdown ShooterTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A835E73C1F20E0A200904228 /* Topdown_ShooterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Topdown_ShooterTests.swift; sourceTree = "<group>"; };
 		A835E73E1F20E0A200904228 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A835E7481F20E1FB00904228 /* sfx_laser1.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = sfx_laser1.ogg; sourceTree = "<group>"; };
+		A835E7491F20E1FB00904228 /* sfx_laser2.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = sfx_laser2.ogg; sourceTree = "<group>"; };
+		A835E74A1F20E1FB00904228 /* sfx_lose.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = sfx_lose.ogg; sourceTree = "<group>"; };
+		A835E74B1F20E1FB00904228 /* sfx_shieldDown.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = sfx_shieldDown.ogg; sourceTree = "<group>"; };
+		A835E74C1F20E1FB00904228 /* sfx_shieldUp.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = sfx_shieldUp.ogg; sourceTree = "<group>"; };
+		A835E74D1F20E1FB00904228 /* sfx_twoTone.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = sfx_twoTone.ogg; sourceTree = "<group>"; };
+		A835E74E1F20E1FB00904228 /* sfx_zap.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = sfx_zap.ogg; sourceTree = "<group>"; };
+		A835E7571F20E23100904228 /* kenvector_future_thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = kenvector_future_thin.ttf; sourceTree = "<group>"; };
+		A835E7581F20E23100904228 /* kenvector_future.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = kenvector_future.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +101,8 @@
 		A835E7201F20E0A200904228 /* Topdown Shooter */ = {
 			isa = PBXGroup;
 			children = (
+				A835E7471F20E10400904228 /* Audio */,
+				A835E7561F20E21A00904228 /* Fonts */,
 				A835E7211F20E0A200904228 /* AppDelegate.swift */,
 				A835E7231F20E0A200904228 /* GameScene.sks */,
 				A835E7251F20E0A200904228 /* Actions.sks */,
@@ -103,6 +123,29 @@
 				A835E73E1F20E0A200904228 /* Info.plist */,
 			);
 			path = "Topdown ShooterTests";
+			sourceTree = "<group>";
+		};
+		A835E7471F20E10400904228 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				A835E7481F20E1FB00904228 /* sfx_laser1.ogg */,
+				A835E7491F20E1FB00904228 /* sfx_laser2.ogg */,
+				A835E74A1F20E1FB00904228 /* sfx_lose.ogg */,
+				A835E74B1F20E1FB00904228 /* sfx_shieldDown.ogg */,
+				A835E74C1F20E1FB00904228 /* sfx_shieldUp.ogg */,
+				A835E74D1F20E1FB00904228 /* sfx_twoTone.ogg */,
+				A835E74E1F20E1FB00904228 /* sfx_zap.ogg */,
+			);
+			name = Audio;
+			sourceTree = "<group>";
+		};
+		A835E7561F20E21A00904228 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				A835E7571F20E23100904228 /* kenvector_future_thin.ttf */,
+				A835E7581F20E23100904228 /* kenvector_future.ttf */,
+			);
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -188,11 +231,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A835E7501F20E1FB00904228 /* sfx_laser2.ogg in Resources */,
 				A835E72D1F20E0A200904228 /* Main.storyboard in Resources */,
+				A835E7511F20E1FB00904228 /* sfx_lose.ogg in Resources */,
+				A835E7591F20E23100904228 /* kenvector_future_thin.ttf in Resources */,
+				A835E7531F20E1FB00904228 /* sfx_shieldUp.ogg in Resources */,
 				A835E7241F20E0A200904228 /* GameScene.sks in Resources */,
+				A835E7551F20E1FB00904228 /* sfx_zap.ogg in Resources */,
+				A835E7521F20E1FB00904228 /* sfx_shieldDown.ogg in Resources */,
 				A835E72F1F20E0A200904228 /* Assets.xcassets in Resources */,
+				A835E74F1F20E1FB00904228 /* sfx_laser1.ogg in Resources */,
+				A835E7541F20E1FB00904228 /* sfx_twoTone.ogg in Resources */,
 				A835E7321F20E0A200904228 /* LaunchScreen.storyboard in Resources */,
 				A835E7261F20E0A200904228 /* Actions.sks in Resources */,
+				A835E75A1F20E23100904228 /* kenvector_future.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
