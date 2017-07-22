@@ -31,7 +31,6 @@
 		A838D3DE1F235AC000F9947B /* Asteroid.swift in Sources */ = {isa = PBXBuildFile; fileRef = A838D3DA1F235AC000F9947B /* Asteroid.swift */; };
 		A838D3DF1F235AC000F9947B /* Alien.swift in Sources */ = {isa = PBXBuildFile; fileRef = A838D3DB1F235AC000F9947B /* Alien.swift */; };
 		A838D3E11F235AF700F9947B /* HealthBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A838D3E01F235AF700F9947B /* HealthBar.swift */; };
-		A838D3E51F23617800F9947B /* GameElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = A838D3E41F23617700F9947B /* GameElements.swift */; };
 		A838D3E81F2367E800F9947B /* EntityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A838D3E71F2367E800F9947B /* EntityManager.swift */; };
 		A838D3EA1F237C4100F9947B /* EncounterSpaceships.sks in Resources */ = {isa = PBXBuildFile; fileRef = A838D3E91F237C4100F9947B /* EncounterSpaceships.sks */; };
 		A8AC5EBA1F234CDD00802340 /* HUD.sks in Resources */ = {isa = PBXBuildFile; fileRef = A8AC5EB91F234CDD00802340 /* HUD.sks */; };
@@ -76,7 +75,6 @@
 		A838D3DA1F235AC000F9947B /* Asteroid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Asteroid.swift; sourceTree = "<group>"; };
 		A838D3DB1F235AC000F9947B /* Alien.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alien.swift; sourceTree = "<group>"; };
 		A838D3E01F235AF700F9947B /* HealthBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthBar.swift; sourceTree = "<group>"; };
-		A838D3E41F23617700F9947B /* GameElements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameElements.swift; sourceTree = "<group>"; };
 		A838D3E71F2367E800F9947B /* EntityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityManager.swift; sourceTree = "<group>"; };
 		A838D3E91F237C4100F9947B /* EncounterSpaceships.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = EncounterSpaceships.sks; sourceTree = "<group>"; };
 		A8AC5EB91F234CDD00802340 /* HUD.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = HUD.sks; sourceTree = "<group>"; };
@@ -187,7 +185,6 @@
 		A838D3E61F23618C00F9947B /* Game Logic */ = {
 			isa = PBXGroup;
 			children = (
-				A838D3E41F23617700F9947B /* GameElements.swift */,
 				A838D3D51F2358C600F9947B /* EncounterManager.swift */,
 				A835E7271F20E0A200904228 /* GameScene.swift */,
 			);
@@ -311,7 +308,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A838D3E81F2367E800F9947B /* EntityManager.swift in Sources */,
-				A838D3E51F23617800F9947B /* GameElements.swift in Sources */,
 				A838D3DD1F235AC000F9947B /* Spaceship.swift in Sources */,
 				A838D3E11F235AF700F9947B /* HealthBar.swift in Sources */,
 				A835E7281F20E0A200904228 /* GameScene.swift in Sources */,
