@@ -25,6 +25,16 @@
 		A835E7551F20E1FB00904228 /* sfx_zap.ogg in Resources */ = {isa = PBXBuildFile; fileRef = A835E74E1F20E1FB00904228 /* sfx_zap.ogg */; };
 		A835E7591F20E23100904228 /* kenvector_future_thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A835E7571F20E23100904228 /* kenvector_future_thin.ttf */; };
 		A835E75A1F20E23100904228 /* kenvector_future.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A835E7581F20E23100904228 /* kenvector_future.ttf */; };
+		A838D3D61F2358C600F9947B /* EncounterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A838D3D51F2358C600F9947B /* EncounterManager.swift */; };
+		A838D3DC1F235AC000F9947B /* GameEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A838D3D81F235AC000F9947B /* GameEntity.swift */; };
+		A838D3DD1F235AC000F9947B /* Spaceship.swift in Sources */ = {isa = PBXBuildFile; fileRef = A838D3D91F235AC000F9947B /* Spaceship.swift */; };
+		A838D3DE1F235AC000F9947B /* Asteroid.swift in Sources */ = {isa = PBXBuildFile; fileRef = A838D3DA1F235AC000F9947B /* Asteroid.swift */; };
+		A838D3DF1F235AC000F9947B /* Alien.swift in Sources */ = {isa = PBXBuildFile; fileRef = A838D3DB1F235AC000F9947B /* Alien.swift */; };
+		A838D3E11F235AF700F9947B /* HealthBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A838D3E01F235AF700F9947B /* HealthBar.swift */; };
+		A838D3E51F23617800F9947B /* GameElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = A838D3E41F23617700F9947B /* GameElements.swift */; };
+		A838D3E81F2367E800F9947B /* EntityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A838D3E71F2367E800F9947B /* EntityManager.swift */; };
+		A838D3EA1F237C4100F9947B /* EncounterSpaceships.sks in Resources */ = {isa = PBXBuildFile; fileRef = A838D3E91F237C4100F9947B /* EncounterSpaceships.sks */; };
+		A8AC5EBA1F234CDD00802340 /* HUD.sks in Resources */ = {isa = PBXBuildFile; fileRef = A8AC5EB91F234CDD00802340 /* HUD.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +70,16 @@
 		A835E74E1F20E1FB00904228 /* sfx_zap.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = sfx_zap.ogg; sourceTree = "<group>"; };
 		A835E7571F20E23100904228 /* kenvector_future_thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = kenvector_future_thin.ttf; sourceTree = "<group>"; };
 		A835E7581F20E23100904228 /* kenvector_future.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = kenvector_future.ttf; sourceTree = "<group>"; };
+		A838D3D51F2358C600F9947B /* EncounterManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EncounterManager.swift; path = ../EncounterManager.swift; sourceTree = "<group>"; };
+		A838D3D81F235AC000F9947B /* GameEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameEntity.swift; sourceTree = "<group>"; };
+		A838D3D91F235AC000F9947B /* Spaceship.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spaceship.swift; sourceTree = "<group>"; };
+		A838D3DA1F235AC000F9947B /* Asteroid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Asteroid.swift; sourceTree = "<group>"; };
+		A838D3DB1F235AC000F9947B /* Alien.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alien.swift; sourceTree = "<group>"; };
+		A838D3E01F235AF700F9947B /* HealthBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthBar.swift; sourceTree = "<group>"; };
+		A838D3E41F23617700F9947B /* GameElements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameElements.swift; sourceTree = "<group>"; };
+		A838D3E71F2367E800F9947B /* EntityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityManager.swift; sourceTree = "<group>"; };
+		A838D3E91F237C4100F9947B /* EncounterSpaceships.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = EncounterSpaceships.sks; sourceTree = "<group>"; };
+		A8AC5EB91F234CDD00802340 /* HUD.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = HUD.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,17 +121,20 @@
 		A835E7201F20E0A200904228 /* Topdown Shooter */ = {
 			isa = PBXGroup;
 			children = (
+				A838D3E61F23618C00F9947B /* Game Logic */,
+				A838D3E01F235AF700F9947B /* HealthBar.swift */,
 				A835E7471F20E10400904228 /* Audio */,
+				A838D3D71F235AAC00F9947B /* Entities */,
 				A835E7561F20E21A00904228 /* Fonts */,
 				A835E7211F20E0A200904228 /* AppDelegate.swift */,
 				A835E7231F20E0A200904228 /* GameScene.sks */,
-				A835E7251F20E0A200904228 /* Actions.sks */,
-				A835E7271F20E0A200904228 /* GameScene.swift */,
 				A835E7291F20E0A200904228 /* GameViewController.swift */,
+				A8AC5EB91F234CDD00802340 /* HUD.sks */,
 				A835E72B1F20E0A200904228 /* Main.storyboard */,
 				A835E72E1F20E0A200904228 /* Assets.xcassets */,
 				A835E7301F20E0A200904228 /* LaunchScreen.storyboard */,
 				A835E7331F20E0A200904228 /* Info.plist */,
+				A838D3E91F237C4100F9947B /* EncounterSpaceships.sks */,
 			);
 			path = "Topdown Shooter";
 			sourceTree = "<group>";
@@ -142,10 +165,33 @@
 		A835E7561F20E21A00904228 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				A835E7251F20E0A200904228 /* Actions.sks */,
 				A835E7571F20E23100904228 /* kenvector_future_thin.ttf */,
 				A835E7581F20E23100904228 /* kenvector_future.ttf */,
 			);
 			name = Fonts;
+			sourceTree = "<group>";
+		};
+		A838D3D71F235AAC00F9947B /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				A838D3E71F2367E800F9947B /* EntityManager.swift */,
+				A838D3D81F235AC000F9947B /* GameEntity.swift */,
+				A838D3D91F235AC000F9947B /* Spaceship.swift */,
+				A838D3DA1F235AC000F9947B /* Asteroid.swift */,
+				A838D3DB1F235AC000F9947B /* Alien.swift */,
+			);
+			name = Entities;
+			sourceTree = "<group>";
+		};
+		A838D3E61F23618C00F9947B /* Game Logic */ = {
+			isa = PBXGroup;
+			children = (
+				A838D3E41F23617700F9947B /* GameElements.swift */,
+				A838D3D51F2358C600F9947B /* EncounterManager.swift */,
+				A835E7271F20E0A200904228 /* GameScene.swift */,
+			);
+			name = "Game Logic";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -243,6 +289,8 @@
 				A835E74F1F20E1FB00904228 /* sfx_laser1.ogg in Resources */,
 				A835E7541F20E1FB00904228 /* sfx_twoTone.ogg in Resources */,
 				A835E7321F20E0A200904228 /* LaunchScreen.storyboard in Resources */,
+				A838D3EA1F237C4100F9947B /* EncounterSpaceships.sks in Resources */,
+				A8AC5EBA1F234CDD00802340 /* HUD.sks in Resources */,
 				A835E7261F20E0A200904228 /* Actions.sks in Resources */,
 				A835E75A1F20E23100904228 /* kenvector_future.ttf in Resources */,
 			);
@@ -262,9 +310,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A838D3E81F2367E800F9947B /* EntityManager.swift in Sources */,
+				A838D3E51F23617800F9947B /* GameElements.swift in Sources */,
+				A838D3DD1F235AC000F9947B /* Spaceship.swift in Sources */,
+				A838D3E11F235AF700F9947B /* HealthBar.swift in Sources */,
 				A835E7281F20E0A200904228 /* GameScene.swift in Sources */,
 				A835E72A1F20E0A200904228 /* GameViewController.swift in Sources */,
+				A838D3DE1F235AC000F9947B /* Asteroid.swift in Sources */,
 				A835E7221F20E0A200904228 /* AppDelegate.swift in Sources */,
+				A838D3D61F2358C600F9947B /* EncounterManager.swift in Sources */,
+				A838D3DC1F235AC000F9947B /* GameEntity.swift in Sources */,
+				A838D3DF1F235AC000F9947B /* Alien.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -472,6 +528,7 @@
 				A835E7431F20E0A200904228 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A835E7441F20E0A200904228 /* Build configuration list for PBXNativeTarget "Topdown ShooterTests" */ = {
 			isa = XCConfigurationList;
@@ -480,6 +537,7 @@
 				A835E7461F20E0A200904228 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
