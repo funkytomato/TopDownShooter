@@ -28,8 +28,8 @@ class Alien: GameEntity
         self.size = CGSize(width: 35, height: 25)
         self.position = entityPosition
         self.zPosition = 1
-        ventingPlasma!.isHidden = true
-        addChild(ventingPlasma!)
+        //ventingPlasma!.isHidden = true
+        //addChild(ventingPlasma!)
         configureCollisionBody()
         
         healthBar = HealthBar(size: self.size, barOffset: 25)
