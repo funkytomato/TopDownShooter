@@ -33,6 +33,20 @@
 		A838D3E11F235AF700F9947B /* HealthBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A838D3E01F235AF700F9947B /* HealthBar.swift */; };
 		A838D3E81F2367E800F9947B /* EntityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A838D3E71F2367E800F9947B /* EntityManager.swift */; };
 		A838D3EA1F237C4100F9947B /* EncounterSpaceships.sks in Resources */ = {isa = PBXBuildFile; fileRef = A838D3E91F237C4100F9947B /* EncounterSpaceships.sks */; };
+		A838D3EC1F23927600F9947B /* Ufo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A838D3EB1F23927600F9947B /* Ufo.swift */; };
+		A838D3EE1F2394D500F9947B /* smallHit.wav in Resources */ = {isa = PBXBuildFile; fileRef = A838D3ED1F2394D500F9947B /* smallHit.wav */; };
+		A838D3FA1F2394F800F9947B /* attack.wav in Resources */ = {isa = PBXBuildFile; fileRef = A838D3EF1F2394F800F9947B /* attack.wav */; };
+		A838D3FB1F2394F800F9947B /* bigHit.wav in Resources */ = {isa = PBXBuildFile; fileRef = A838D3F01F2394F800F9947B /* bigHit.wav */; };
+		A838D3FC1F2394F800F9947B /* boom.wav in Resources */ = {isa = PBXBuildFile; fileRef = A838D3F11F2394F800F9947B /* boom.wav */; };
+		A838D3FD1F2394F800F9947B /* defend.wav in Resources */ = {isa = PBXBuildFile; fileRef = A838D3F21F2394F800F9947B /* defend.wav */; };
+		A838D3FE1F2394F800F9947B /* Latin_Industries.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A838D3F31F2394F800F9947B /* Latin_Industries.mp3 */; };
+		A838D3FF1F2394F800F9947B /* lioncry3.wav in Resources */ = {isa = PBXBuildFile; fileRef = A838D3F41F2394F800F9947B /* lioncry3.wav */; };
+		A838D4001F2394F800F9947B /* lionlaugh4.wav in Resources */ = {isa = PBXBuildFile; fileRef = A838D3F51F2394F800F9947B /* lionlaugh4.wav */; };
+		A838D4011F2394F800F9947B /* mass.wav in Resources */ = {isa = PBXBuildFile; fileRef = A838D3F61F2394F800F9947B /* mass.wav */; };
+		A838D4021F2394F800F9947B /* pew.wav in Resources */ = {isa = PBXBuildFile; fileRef = A838D3F71F2394F800F9947B /* pew.wav */; };
+		A838D4031F2394F800F9947B /* pew2.wav in Resources */ = {isa = PBXBuildFile; fileRef = A838D3F81F2394F800F9947B /* pew2.wav */; };
+		A838D4041F2394F800F9947B /* spawn.wav in Resources */ = {isa = PBXBuildFile; fileRef = A838D3F91F2394F800F9947B /* spawn.wav */; };
+		A838D4061F23A70100F9947B /* Explosions.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A838D4051F23A70100F9947B /* Explosions.atlas */; };
 		A8AC5EBA1F234CDD00802340 /* HUD.sks in Resources */ = {isa = PBXBuildFile; fileRef = A8AC5EB91F234CDD00802340 /* HUD.sks */; };
 /* End PBXBuildFile section */
 
@@ -77,6 +91,20 @@
 		A838D3E01F235AF700F9947B /* HealthBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthBar.swift; sourceTree = "<group>"; };
 		A838D3E71F2367E800F9947B /* EntityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityManager.swift; sourceTree = "<group>"; };
 		A838D3E91F237C4100F9947B /* EncounterSpaceships.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = EncounterSpaceships.sks; sourceTree = "<group>"; };
+		A838D3EB1F23927600F9947B /* Ufo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ufo.swift; sourceTree = "<group>"; };
+		A838D3ED1F2394D500F9947B /* smallHit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = smallHit.wav; sourceTree = "<group>"; };
+		A838D3EF1F2394F800F9947B /* attack.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = attack.wav; sourceTree = "<group>"; };
+		A838D3F01F2394F800F9947B /* bigHit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bigHit.wav; sourceTree = "<group>"; };
+		A838D3F11F2394F800F9947B /* boom.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = boom.wav; sourceTree = "<group>"; };
+		A838D3F21F2394F800F9947B /* defend.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = defend.wav; sourceTree = "<group>"; };
+		A838D3F31F2394F800F9947B /* Latin_Industries.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Latin_Industries.mp3; sourceTree = "<group>"; };
+		A838D3F41F2394F800F9947B /* lioncry3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = lioncry3.wav; sourceTree = "<group>"; };
+		A838D3F51F2394F800F9947B /* lionlaugh4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = lionlaugh4.wav; sourceTree = "<group>"; };
+		A838D3F61F2394F800F9947B /* mass.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = mass.wav; sourceTree = "<group>"; };
+		A838D3F71F2394F800F9947B /* pew.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = pew.wav; sourceTree = "<group>"; };
+		A838D3F81F2394F800F9947B /* pew2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = pew2.wav; sourceTree = "<group>"; };
+		A838D3F91F2394F800F9947B /* spawn.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = spawn.wav; sourceTree = "<group>"; };
+		A838D4051F23A70100F9947B /* Explosions.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Explosions.atlas; sourceTree = "<group>"; };
 		A8AC5EB91F234CDD00802340 /* HUD.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = HUD.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -119,6 +147,7 @@
 		A835E7201F20E0A200904228 /* Topdown Shooter */ = {
 			isa = PBXGroup;
 			children = (
+				A838D4051F23A70100F9947B /* Explosions.atlas */,
 				A838D3E61F23618C00F9947B /* Game Logic */,
 				A838D3E01F235AF700F9947B /* HealthBar.swift */,
 				A835E7471F20E10400904228 /* Audio */,
@@ -133,6 +162,7 @@
 				A835E7301F20E0A200904228 /* LaunchScreen.storyboard */,
 				A835E7331F20E0A200904228 /* Info.plist */,
 				A838D3E91F237C4100F9947B /* EncounterSpaceships.sks */,
+				A838D3EB1F23927600F9947B /* Ufo.swift */,
 			);
 			path = "Topdown Shooter";
 			sourceTree = "<group>";
@@ -149,6 +179,18 @@
 		A835E7471F20E10400904228 /* Audio */ = {
 			isa = PBXGroup;
 			children = (
+				A838D3EF1F2394F800F9947B /* attack.wav */,
+				A838D3F01F2394F800F9947B /* bigHit.wav */,
+				A838D3F11F2394F800F9947B /* boom.wav */,
+				A838D3F21F2394F800F9947B /* defend.wav */,
+				A838D3F31F2394F800F9947B /* Latin_Industries.mp3 */,
+				A838D3F41F2394F800F9947B /* lioncry3.wav */,
+				A838D3F51F2394F800F9947B /* lionlaugh4.wav */,
+				A838D3F61F2394F800F9947B /* mass.wav */,
+				A838D3F71F2394F800F9947B /* pew.wav */,
+				A838D3F81F2394F800F9947B /* pew2.wav */,
+				A838D3F91F2394F800F9947B /* spawn.wav */,
+				A838D3ED1F2394D500F9947B /* smallHit.wav */,
 				A835E7481F20E1FB00904228 /* sfx_laser1.ogg */,
 				A835E7491F20E1FB00904228 /* sfx_laser2.ogg */,
 				A835E74A1F20E1FB00904228 /* sfx_lose.ogg */,
@@ -275,19 +317,32 @@
 			buildActionMask = 2147483647;
 			files = (
 				A835E7501F20E1FB00904228 /* sfx_laser2.ogg in Resources */,
+				A838D4021F2394F800F9947B /* pew.wav in Resources */,
+				A838D4001F2394F800F9947B /* lionlaugh4.wav in Resources */,
 				A835E72D1F20E0A200904228 /* Main.storyboard in Resources */,
 				A835E7511F20E1FB00904228 /* sfx_lose.ogg in Resources */,
 				A835E7591F20E23100904228 /* kenvector_future_thin.ttf in Resources */,
 				A835E7531F20E1FB00904228 /* sfx_shieldUp.ogg in Resources */,
+				A838D3FC1F2394F800F9947B /* boom.wav in Resources */,
 				A835E7241F20E0A200904228 /* GameScene.sks in Resources */,
+				A838D3FA1F2394F800F9947B /* attack.wav in Resources */,
 				A835E7551F20E1FB00904228 /* sfx_zap.ogg in Resources */,
+				A838D4011F2394F800F9947B /* mass.wav in Resources */,
 				A835E7521F20E1FB00904228 /* sfx_shieldDown.ogg in Resources */,
+				A838D3EE1F2394D500F9947B /* smallHit.wav in Resources */,
 				A835E72F1F20E0A200904228 /* Assets.xcassets in Resources */,
 				A835E74F1F20E1FB00904228 /* sfx_laser1.ogg in Resources */,
+				A838D3FB1F2394F800F9947B /* bigHit.wav in Resources */,
 				A835E7541F20E1FB00904228 /* sfx_twoTone.ogg in Resources */,
+				A838D4041F2394F800F9947B /* spawn.wav in Resources */,
 				A835E7321F20E0A200904228 /* LaunchScreen.storyboard in Resources */,
 				A838D3EA1F237C4100F9947B /* EncounterSpaceships.sks in Resources */,
+				A838D3FD1F2394F800F9947B /* defend.wav in Resources */,
 				A8AC5EBA1F234CDD00802340 /* HUD.sks in Resources */,
+				A838D3FE1F2394F800F9947B /* Latin_Industries.mp3 in Resources */,
+				A838D4061F23A70100F9947B /* Explosions.atlas in Resources */,
+				A838D3FF1F2394F800F9947B /* lioncry3.wav in Resources */,
+				A838D4031F2394F800F9947B /* pew2.wav in Resources */,
 				A835E7261F20E0A200904228 /* Actions.sks in Resources */,
 				A835E75A1F20E23100904228 /* kenvector_future.ttf in Resources */,
 			);
@@ -317,6 +372,7 @@
 				A838D3D61F2358C600F9947B /* EncounterManager.swift in Sources */,
 				A838D3DC1F235AC000F9947B /* GameEntity.swift in Sources */,
 				A838D3DF1F235AC000F9947B /* Alien.swift in Sources */,
+				A838D3EC1F23927600F9947B /* Ufo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

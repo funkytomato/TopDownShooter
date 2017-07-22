@@ -14,6 +14,9 @@ class Spaceship: GameEntity
     let ventingPlasma = SKEmitterNode(fileNamed: "ventingPlasma.sks")
     var healthBar : HealthBar?
     
+    let spaceshipAtlas = SKTextureAtlas(named:"Spaceship")
+    var spaceshipSprites = Array<SKTexture>()
+    
     required init?(coder aDecoder: NSCoder)
     {
         healthBar = HealthBar()
@@ -22,8 +25,9 @@ class Spaceship: GameEntity
     
     init(entityPosition: CGPoint, entityTexture: SKTexture)
     {
-
-        super.init(position: entityPosition, texture: entityTexture)
+        let texture = SKTexture(imageNamed: "Spaceship")
+//        super.init(position: entityPosition, texture: entityTexture)
+        super.init(position:entityPosition, texture: texture)
         name = "spaceship"
         self.size = CGSize(width: 50, height: 50)
         self.position = entityPosition
@@ -35,7 +39,13 @@ class Spaceship: GameEntity
         healthBar = HealthBar(size: self.size, barOffset: 25)
         addChild(healthBar!)
 
-        
+    }
+    
+    func createSpriteAtlas()
+    {
+        spaceshipSprites.append(spaceshipAtlas.textureNamed("spaceflier_01_a"))
+        spaceshipSprites.append(spaceshipAtlas.textureNamed("spaceflier_02_a"))
+        spaceshipSprites.append(spaceshipAtlas.textureNamed("spaceflier_03_a"))
     }
     
     
@@ -58,7 +68,6 @@ class Spaceship: GameEntity
         self.physicsBody?.affectedByGravity = false
         self.physicsBody?.isDynamic = true
     }
-
     
     override func collidedWith(_ body: SKPhysicsBody, contact: SKPhysicsContact)
     {
