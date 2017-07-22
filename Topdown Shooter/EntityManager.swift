@@ -21,6 +21,7 @@ struct PhysicsCollisionBitMask
     static let Asteroid:UInt32 = 0x1 << 2
     static let Alien:UInt32 = 0x1 << 3
     static let Laser:UInt32 = 0x1 << 4
+    static let Ufo:UInt32 = 0x1 << 5
 }
 
 class EntityManager
@@ -85,14 +86,24 @@ class EntityManager
     }
     
     /*
+     Create and add an alien to the location specified by the SKS file.
+     */
+    func spawnUfo(startPosition: CGPoint)
+    {
+        let texture = SKTexture(imageNamed: "ufoBlue")
+        let ufo = Alien(entityPosition: startPosition, entityTexture: texture)
+        add(ufo)
+    }
+    
+    /*
      Create and add a laser to the location specified by the SKS file.
      */
-    func spawnLaser(node: SKSpriteNode)
+    func spawnLaser(nodeFiredFrom: SKNode)
     {
         
-        let laser = SKSpriteNode(imageNamed: "attack_laser_blue")
+        let laser = SKSpriteNode(imageNamed: "laserBlue01")
         laser.size = CGSize(width: 50, height: 20)
-        laser.position = CGPoint(x: node.position.x + 25, y: node.position.y + 420)
+        laser.position = CGPoint(x: nodeFiredFrom.position.x + 25, y: nodeFiredFrom.position.y + 420)
         
         laser.physicsBody?.allowsRotation = false
         laser.physicsBody = SKPhysicsBody(rectangleOf: laser.size)
@@ -106,8 +117,8 @@ class EntityManager
         
         
         //let randomPosition = random(min: 0, max: 500)
-        laser.position.y = node.position.y
-        laser.position.x = node.position.x + 10
+        laser.position.y = nodeFiredFrom.position.y
+        laser.position.x = nodeFiredFrom.position.x + 10
         
         add(laser)
     }
