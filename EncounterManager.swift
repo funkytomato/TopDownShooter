@@ -48,8 +48,14 @@ class EncounterManager
                         {
                             case "Spaceship":
                                 entityManager.spawnSpaceship(startPosition: node.position)
-                            
-
+                            case "asteroid":
+                                entityManager.spawnAsteroid(startPosition: node.position)
+                            case "alien":
+                                entityManager.spawnAlien(startPosition: node.position)
+                            case "ufo":
+                                entityManager.spawnUfo(startPosition: node.position)
+                            case "laser":
+                                entityManager.spawnLaser(nodeFiredFrom: node)
 
                         default:
                             print("Name error: \node.name)")
