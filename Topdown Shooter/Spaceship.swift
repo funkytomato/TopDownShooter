@@ -14,8 +14,8 @@ class Spaceship: GameEntity
     let ventingPlasma = SKEmitterNode(fileNamed: "ventingPlasma.sks")
     var healthBar : HealthBar?
     
-    let spaceshipAtlas = SKTextureAtlas(named:"Spaceship")
-    var spaceshipSprites = Array<SKTexture>()
+    //let spaceshipAtlas = SKTextureAtlas(named:"Spaceship")
+    //var spaceshipSprites = Array<SKTexture>()
     
     required init?(coder aDecoder: NSCoder)
     {
@@ -28,7 +28,7 @@ class Spaceship: GameEntity
         let texture = SKTexture(imageNamed: "Spaceship")
 //        super.init(position: entityPosition, texture: entityTexture)
         super.init(position:entityPosition, texture: texture)
-        name = "spaceship"
+        self.name = "spaceship"
         self.size = CGSize(width: 50, height: 50)
         self.position = entityPosition
         self.zPosition = 1
@@ -40,14 +40,14 @@ class Spaceship: GameEntity
         addChild(healthBar!)
 
     }
-    
+    /*
     func createSpriteAtlas()
     {
         spaceshipSprites.append(spaceshipAtlas.textureNamed("spaceflier_01_a"))
         spaceshipSprites.append(spaceshipAtlas.textureNamed("spaceflier_02_a"))
         spaceshipSprites.append(spaceshipAtlas.textureNamed("spaceflier_03_a"))
     }
-    
+    */
     
     func configureCollisionBody()
     {
@@ -107,7 +107,7 @@ class Spaceship: GameEntity
             
             //Blow up spaceship
             healthBar?.health = 0.0
-            let mainScene = scene as! GameScene
+            //let mainScene = scene as! GameScene
             //mainScene.createExplosion(nodeToExplode: self)
             
             healthBar?.health = 100.0
