@@ -60,19 +60,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         entityManager = EntityManager(scene: self)
         encounterManager = EncounterManager(scene: self)
 
-        let texture = SKTexture(imageNamed: "Spaceship")
-        
-        let startPosition = CGPoint(x: self.frame.width / 2, y: self.frame.height / 2)
-        player = Spaceship(entityPosition: startPosition, entityTexture: texture)
-        addChild(player)
+        //let texture = SKTexture(imageNamed: "Spaceship")
+        //let startPosition = CGPoint(x: self.frame.width / 2, y: self.frame.height / 2)
+//        player = Spaceship(entityPosition: startPosition, entityTexture: texture)
+//        addChild(player)
         
         self.lastUpdateTime = 0
 
     }
     
+    func playerNode() -> Spaceship
+    {
+        let node = entityManager.scene.childNode(withName: "player")! as! Spaceship
+        //print("node:\(node)")
+        
+        return node
+        //return entityManager.scene.childNode(withName: "spaceship")! as! Spaceship
+    }
+    
     func initaliseExplosionAtlas()
     {
-        print("initaliseAlas called")
+        //print("initaliseAlas called")
         
         explosionAtlas = SKTextureAtlas(named:"Explosions")
         
@@ -136,8 +144,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         let asteroidRotation = SKAction.rotate(byAngle: -CGFloat.pi * 2, duration: TimeInterval(0.008 * asteroidDistance))
         let moveAsteroid = SKAction.moveBy(x: 0, y: -asteroidDistance - 100, duration: TimeInterval(0.008 * asteroidDistance))
         let removeAsteroid = SKAction.removeFromParent()
-        print("asteroid distance\(-asteroidDistance - 100)")
-        print("asteroid rotation\(-CGFloat.pi * 2)")
+        //print("asteroid distance\(-asteroidDistance - 100)")
+        //print("asteroid rotation\(-CGFloat.pi * 2)")
         
         //Group movement and rotation to run sychronously
         let rotateAndMove = SKAction.group([asteroidRotation, moveAsteroid])
@@ -193,46 +201,43 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             
             for node in nodeTouched
             {
-                if node.name == "HUD"
+                
+                if node.name == "leftBtn"
                 {
-                    player.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-                    player.physicsBody?.applyImpulse(CGVector(dx: -700, dy: 0))
+                    playerNode().physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+                    playerNode().physicsBody?.applyImpulse(CGVector(dx: -100, dy: 0))
                 }
+                else if node.name == "rightBtn"
+                {
+                    playerNode().physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+                    playerNode().physicsBody?.applyImpulse(CGVector(dx: 100, dy: 0))
+                }
+                else if node.name == "upBtn"
+                {
+                    playerNode().physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+                    playerNode().physicsBody?.applyImpulse(CGVector(dx: 0, dy: 100))
+                }
+                else if node.name == "downBtn"
+                {
+                    playerNode().physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+                    playerNode().physicsBody?.applyImpulse(CGVector(dx: 0, dy: -100))
+                }
+                else if node.name == "plusBtn"
+                {
+
+                }
+                else if node.name == "minusBtn"
+                {
+
+                }
+               
+                
+            
             }
+ 
+
         }
-            
-            
- /*
-            if leftBtn.contains(location)
-            {
-                player.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-                player.physicsBody?.applyImpulse(CGVector(dx: -100, dy: 0))
-            }
-            else if rightBtn.contains(location)
-            {
-                player.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-                player.physicsBody?.applyImpulse(CGVector(dx: 100, dy: 0))
-            }
-            else if upBtn.contains(location)
-            {
-                player.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-                player.physicsBody?.applyImpulse(CGVector(dx: 00, dy: 100))
-            }
-            else if downBtn.contains(location)
-            {
-                player.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-                player.physicsBody?.applyImpulse(CGVector(dx: 00, dy: -100))
-            }
-            else if shootBtn.contains(location)
-            {
-                //Shoot laser
-                player.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-                player.run(shootSound)
-                bulletLayerNode.addChild(self.createLaser())
-            }
- */
-        //    }
-       // }
+        
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?)
