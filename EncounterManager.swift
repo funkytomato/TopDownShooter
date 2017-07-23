@@ -46,7 +46,7 @@ class EncounterManager
                     {
                         switch node.name!
                         {
-                            case "Spaceship":
+                            case "player":
                                 entityManager.spawnSpaceship(startPosition: node.position)
                             case "asteroid":
                                 entityManager.spawnAsteroid(startPosition: node.position)
