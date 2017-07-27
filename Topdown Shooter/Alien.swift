@@ -12,11 +12,11 @@ import SpriteKit
 class Alien: GameEntity
 {
     let ventingPlasma = SKEmitterNode(fileNamed: "ventingPlasma.sks")
-    var healthBar : HealthBar?
+    //var healthBar : HealthBar?
     
     required init?(coder aDecoder: NSCoder)
     {
-        healthBar = HealthBar()
+        //healthBar = HealthBar()
         super.init(coder:aDecoder)
     }
     
@@ -32,8 +32,8 @@ class Alien: GameEntity
         //addChild(ventingPlasma!)
         configureCollisionBody()
         
-        healthBar = HealthBar(size: self.size, barOffset: 25)
-        addChild(healthBar!)
+        //healthBar = HealthBar(size: self.size, barOffset: 25)
+        //addChild(healthBar!)
     }
     
     
@@ -56,7 +56,6 @@ class Alien: GameEntity
 
         
         self.physicsBody?.isDynamic = true
-        
         self.physicsBody?.affectedByGravity = false
     }
     
@@ -74,26 +73,31 @@ class Alien: GameEntity
         if bodyA == "asteroid" ||
             bodyB == "asteroid"
         {
-            healthBar!.takeDamage(50)
+            //healthBar!.takeDamage(50)
         }
         else if bodyA == "alien" ||
             bodyB == "alien"
         {
-            healthBar!.takeDamage(5)
+            //healthBar!.takeDamage(5)
         }
-        else if bodyA == "ground" ||
-            bodyB == "ground"
+        else if bodyA == "laser" ||
+            bodyB == "laser"
         {
-            healthBar!.takeDamage(1)
+            let mainScene = scene as! GameScene
+            mainScene.createExplosion(nodeToExplode: self)
+
+            
+            //healthBar!.takeDamage(1)
         }
         else if bodyA == "spaceship" ||
             bodyB == "spaceship"
         {
             
+            
         }
         
         //ventingPlasma!.isHidden = healthBar.health > 30.0
-        
+        /*
         if (healthBar?.health)! < 30.0
         {
             ventingPlasma?.isHidden = false
@@ -106,9 +110,11 @@ class Alien: GameEntity
             //Blow up spaceship
             healthBar?.health = 0.0
             let mainScene = scene as! GameScene
-            //mainScene.createExplosion(nodeToExplode: self)
+            mainScene.createExplosion(nodeToExplode: self)
             
             healthBar?.health = 100.0
         }
+ */
+        
     }
 }
