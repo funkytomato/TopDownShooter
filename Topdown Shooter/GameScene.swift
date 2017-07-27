@@ -61,6 +61,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         encounterManager = EncounterManager(scene: self)
         
         self.lastUpdateTime = 0
+        
+        initaliseExplosionAtlas()
 
     }
     
@@ -117,12 +119,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         //Create the SKACtion to run the sprite animation repeatedly
         explosionAction = SKAction.repeat(explosionAnimation, count: 1)
         
+        //Remove explosion from scene
+        let explosionRemoval = SKAction.removeFromParent()
+        
         //Group explosion and sound to run sychronously
-        createAndRemoveExplosion = SKAction.group([explosionAction, explosionSound])
+        let createExplosion = SKAction.group([explosionAction, explosionSound])
+        
+        //Sequence creation and removal
+        createAndRemoveExplosion = SKAction.sequence([createExplosion, explosionRemoval])
         
         createActions()
     }
 
+    func createExplosion(nodeToExplode: SKNode)
+    {
+        nodeToExplode.run(createAndRemoveExplosion)
+        
+        //nodeToExplode.run(explosionAction)
+        //nodeToExplode.run(explosionSound)
+        
+    }
+    
     func createActions()
     {
         //The Alien creation and deletion sequence
@@ -199,7 +216,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate
                 
                 if node.name == "leftBtn"
                 {
-      
+                    
+                    playerNode().isTurningLeft = true
+                    
+                    
+      /*
                     let originalTexture = SKTexture(imageNamed: "leftBtn")
                     let pressedTexture = SKTexture(imageNamed: "leftBtn-2")
                     let pressed:SKAction = SKAction.animate(with: [pressedTexture], timePerFrame: 1.0)
@@ -207,7 +228,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
                     
                     let buttonAnimation = SKAction.sequence([pressed,released])
                     node.run(buttonAnimation)
-    
+    */
                     /*
                     let grow:SKAction = SKAction.scale(by: 1.0, duration: 1.0)
                     let shrink:SKAction = SKAction.scale(by: -1.0, duration: 1.0)
@@ -215,11 +236,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate
                     
                     node.run(seq)
                     */
-                    playerNode().turnLeft()
+                    //playerNode().turnLeft()
                 }
                 else if node.name == "rightBtn"
                 {
-                    playerNode().turnRight()
+                    playerNode().isTurningRight = true
+//                    playerNode().turnRight()
                 }
                 else if node.name == "upBtn"
                 {
@@ -233,7 +255,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
                 }
                 else if node.name == "plusBtn"
                 {
-                    playerNode().thrusting = true
+                    playerNode().isThrusting = true
                 }
                 else if node.name == "minusBtn"
                 {
@@ -254,8 +276,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         for t in touches { self.touchUp(atPoint: t.location(in: self)) }
         
         playerNode().removeAllActions()
-        playerNode().thrusting = false
-        playerNode().reversing = false
+        playerNode().isThrusting = false
+        playerNode().isReversing = false
+        playerNode().isTurningLeft = false
+        playerNode().isTurningRight = false
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?)
@@ -286,5 +310,89 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     override func didMove(to view: SKView)
     {
         encounterManager.addEncountersToWorld(world: self)
+    }
+    
+    func didBegin(_ contact: SKPhysicsContact)
+    {
+        
+        
+        let firstBody = contact.bodyA
+        let secondBody = contact.bodyB
+        
+        
+        if firstBody.categoryBitMask == PhysicsCollisionBitMask.Laser && secondBody.categoryBitMask == PhysicsCollisionBitMask.Alien   ||
+            firstBody.categoryBitMask == PhysicsCollisionBitMask.Alien && secondBody.categoryBitMask == PhysicsCollisionBitMask.Laser
+        {
+            //Laser hit alien spacecraft
+            
+            if contact.bodyA.node?.name == "alien"
+            {
+                contact.bodyA.node?.run(self.explosionAction)
+                contact.bodyA.node?.run(self.explosionSound)
+            }
+            else if contact.bodyB.node?.name == "alien"
+            {
+                contact.bodyB.node?.run(self.explosionAction)
+                contact.bodyB.node?.run(self.explosionSound)
+            }
+        }
+        
+        
+        if firstBody.categoryBitMask == PhysicsCollisionBitMask.Laser && secondBody.categoryBitMask == PhysicsCollisionBitMask.Asteroid ||
+            firstBody.categoryBitMask == PhysicsCollisionBitMask.Asteroid && secondBody.categoryBitMask == PhysicsCollisionBitMask.Laser
+        {
+            //Laser hit alien spacecraft
+            
+            if contact.bodyA.node?.name == "asteroid"
+            {
+                let nodeA = contact.bodyA.node as? Asteroid
+                nodeA?.collidedWith(firstBody, contact: contact)
+                secondBody.node?.removeFromParent()
+                
+                //contact.bodyA.node?.run(self.explosionAction)
+                //contact.bodyA.node?.run(self.explosionSound)
+            }
+            else if contact.bodyB.node?.name == "asteroid"
+            {
+                let nodeB = contact.bodyB.node as? Asteroid
+                nodeB?.collidedWith(secondBody, contact: contact)
+                firstBody.node?.removeFromParent()
+                
+                //contact.bodyB.node?.run(self.explosionAction)
+                //contact.bodyB.node?.run(self.explosionSound)
+            }
+        }
+        
+        if firstBody.categoryBitMask == PhysicsCollisionBitMask.Player && secondBody.categoryBitMask == PhysicsCollisionBitMask.Asteroid   ||
+            firstBody.categoryBitMask == PhysicsCollisionBitMask.Asteroid && secondBody.categoryBitMask == PhysicsCollisionBitMask.Player
+        {
+            //Player collided with asteroid
+            
+            //TO DO: - Reduce player's health, animate collision
+            
+            player.collidedWith(firstBody, contact: contact)
+            
+        }
+        
+        
+        if firstBody.categoryBitMask == PhysicsCollisionBitMask.Player && secondBody.categoryBitMask == PhysicsCollisionBitMask.Alien   ||
+            firstBody.categoryBitMask == PhysicsCollisionBitMask.Alien && secondBody.categoryBitMask == PhysicsCollisionBitMask.Player
+        {
+            //Player collided with Alien spacecraft
+            
+            //TO DO: - Player dies, animate collision and alien takeover
+            player.collidedWith(firstBody, contact: contact)
+        }
+        
+        
+        if firstBody.categoryBitMask == PhysicsCollisionBitMask.Alien && secondBody.categoryBitMask == PhysicsCollisionBitMask.Asteroid   ||
+            firstBody.categoryBitMask == PhysicsCollisionBitMask.Asteroid && secondBody.categoryBitMask == PhysicsCollisionBitMask.Alien
+        {
+            
+            //TO DO: - Player dies, animate collision and alien takeover
+            //player.collidedWith(firstBody, contact: contact)
+            let nodeA = contact.bodyA.node as? Alien
+            nodeA?.collidedWith(firstBody, contact: contact)
+        }
     }
 }
