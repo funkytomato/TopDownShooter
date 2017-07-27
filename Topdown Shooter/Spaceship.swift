@@ -12,18 +12,21 @@ import SpriteKit
 class Spaceship: GameEntity
 {
     /*
-    var _playerAccelX : Float64 = 0
-    var _playerAccelY : Float64 = 0
-    var _playerSpeedX : Float64 = 0
-    var _playerSpeedY : Float64 = 0
-    let MaxPlayerAccel : Float64 = 400.0
-    let MaxPlayerSpeed : Float64 = 200.0
- */
+    let MaxPlayerAccel : CGFloat = 400.0;
+    let MaxPlayerSpeed : CGFloat = 200.0;
+    var _playerAccelX : CGFloat = 0;
+    var _playerAccelY : CGFloat = 0;
+    var _playerSpeedX : CGFloat = 0;
+    var _playerSpeedY : CGFloat = 0;
+    */
     
-    let rotateAngle : CGFloat = π / 4   //45 degrees
-
-    var thrusting = false
-    var reversing = false
+    //let rotateAngle : CGFloat = π / 4   //45 degrees
+    let rotateAngle : CGFloat = π / 28
+    
+    var isTurningLeft = false
+    var isTurningRight = false
+    var isThrusting = false
+    var isReversing = false
  
     let ventingPlasma = SKEmitterNode(fileNamed: "ventingPlasma.sks")
     var healthBar : HealthBar?
@@ -43,7 +46,6 @@ class Spaceship: GameEntity
     init(entityPosition: CGPoint, entityTexture: SKTexture)
     {
         let texture = SKTexture(imageNamed: "Spaceship")
-//        super.init(position: entityPosition, texture: entityTexture)
         super.init(position:entityPosition, texture: texture)
         self.name = "spaceship"
         self.size = CGSize(width: 50, height: 50)
@@ -126,8 +128,8 @@ class Spaceship: GameEntity
             
             //Blow up spaceship
             healthBar?.health = 0.0
-            //let mainScene = scene as! GameScene
-            //mainScene.createExplosion(nodeToExplode: self)
+            let mainScene = scene as! GameScene
+            mainScene.createExplosion(nodeToExplode: self)
             
             healthBar?.health = 100.0
         }
@@ -136,8 +138,8 @@ class Spaceship: GameEntity
     func applyThrust()
     {
    
-        let dx = (10 * cos(heading()))
-        let dy = (10 * sin(heading()))
+        let dx = (30 * cos(heading()))
+        let dy = (30 * sin(heading()))
         
         let impulse = CGVector(dx: dx, dy: dy)
         self.physicsBody?.applyImpulse(impulse)
@@ -190,10 +192,10 @@ class Spaceship: GameEntity
     
     func aft() -> CGFloat
     {
-        print("zrottation:\(self.zRotation)")
+       // print("zrottation:\(self.zRotation)")
         
         let aft = (self.zRotation / 2)
-        print("aft:\(aft + CGFloat(90).degreesToRadians())")
+       // print("aft:\(aft + CGFloat(90).degreesToRadians())")
         
         //Need to align the sprite orientation and the physics body
         return aft - CGFloat(90).degreesToRadians()
@@ -203,38 +205,23 @@ class Spaceship: GameEntity
     func turnLeft()
     {
         //let angle : CGFloat = π / 4   //45 degrees
+
+        let rotate : SKAction = SKAction.rotate(byAngle: rotateAngle, duration: 0)
+        self.run(rotate)
+
         
-        self.removeAllActions()
-        let oneRevolution:SKAction = SKAction.rotate(byAngle: CGFloat(M_PI), duration: 0.5)
-        let repeatRotation:SKAction = SKAction.repeatForever(oneRevolution)
-        self.run(repeatRotation)
+    //    print("zRotation:\(self.zRotation)")
         
-        //print("playerNode().zRotation\(playerNode().zRotation)")
-        /*
-         //let angle : CGFloat = π / 4   //45 degrees
-         let angle : Float = Float(M_PI) / 4.0
-         let point = CGPoint(x:4,y:4)
-         
-         let x = Float(point.x)
-         let y = Float(point.y)
-         
-         var rotatedPoint : CGPoint = point
-         rotatedPoint.x = CGFloat(x * cosf(Float(angle)) - y * sinf(angle))
-         rotatedPoint.y = CGFloat(y * cosf(Float(angle)) + x * sinf(angle))
-         //print("rotatedPoint\(rotatedPoint)")
-         
-         
-         //playerNode().physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-         //playerNode().physicsBody?.applyImpulse(CGVector(dx: -100, dy: 0))
-         */
     }
     
     func turnRight()
     {
-        self.removeAllActions()
-        let oneRevolution:SKAction = SKAction.rotate(byAngle: CGFloat(-M_PI), duration: 1.0)
-        let repeatRotation:SKAction = SKAction.repeatForever(oneRevolution)
-        self.run(repeatRotation)
+        
+        let rotate : SKAction = SKAction.rotate(byAngle: -rotateAngle, duration: 0)
+        self.run(rotate)
+        
+        
+        //print("zRotation:\(self.zRotation)")
     }
     
     func shootGuns() -> SKNode
@@ -244,13 +231,7 @@ class Spaceship: GameEntity
         let dx = (laserDistance * cos(heading()))
         let dy = (laserDistance * sin(heading()))
         
-        //let impulse = CGVector(dx: dx, dy: dy)
-        
-        
-        
         //The Laser creation and deletion sequence
-
-        //let moveLaser = SKAction.moveBy(x: dx, y: dy, duration: TimeInterval(0.008 * laserDistance))
         let moveLaser = SKAction.moveBy(x: dx, y: dy, duration: TimeInterval(0.001 * laserDistance))
 
         let removeLaser = SKAction.removeFromParent()
@@ -260,10 +241,9 @@ class Spaceship: GameEntity
         
         let texture = SKTexture(imageNamed: "laserBlue01")
         let laser = SKSpriteNode(texture: texture)
+        laser.name = "laser"
         laser.zRotation = self.zRotation
-        
-        //laser.size = CGSize(width: 50, height: 20)
-        //laser.position = CGPoint(x: self.position.x + 25, y: self.position.y + 420)
+        laser.zPosition = 1
         
         laser.physicsBody?.allowsRotation = false
         laser.physicsBody = SKPhysicsBody(rectangleOf: laser.size)
@@ -273,8 +253,6 @@ class Spaceship: GameEntity
         laser.physicsBody?.isDynamic = false
         laser.physicsBody?.affectedByGravity = false
         laser.physicsBody?.mass = 1
-        
-        laser.zPosition = 1
         
         laser.position.y = self.position.y
         laser.position.x = self.position.x
@@ -286,45 +264,30 @@ class Spaceship: GameEntity
         
     }
     
+    
     override func update(_ delta: TimeInterval)
     {
  //       self.rotateToVelocity((self.physicsBody?.velocity)!, rate: 1)
 
-/*
-        // 1
-        _playerSpeedX += _playerAccelX * delta;
-        _playerSpeedY += _playerAccelY * delta;
+        if isTurningLeft
+        {
+            turnLeft()
+        }
+        else if isTurningRight
+        {
+            turnRight()
+        }
         
-                print("A. Player Speed:X\(_playerSpeedX),Y:\(_playerSpeedY)")
-        
-        // 2
-        _playerSpeedX = Float64(fmaxf(fminf(Float(_playerSpeedX), Float(MaxPlayerSpeed)), -(Float)(MaxPlayerSpeed)));
-        _playerSpeedY = Float64(fmaxf(fminf(Float(_playerSpeedY), Float(MaxPlayerSpeed)), -(Float)(MaxPlayerSpeed)));
-        
-                print("B. Player Speed:X\(_playerSpeedX),Y:\(_playerSpeedY)")
-        
-        // 3
-        var newX = Float64(self.position.x) + (_playerSpeedX*delta);
-        var newY = Float64(self.position.y) + (_playerSpeedY*delta);
-        
-        // 4
-        newX = max(Float64(frame.size.width), min(newX, 0));
-        newY = max(Float64(frame.size.height), min(newY, 0));
-        self.position = CGPoint(x: newX, y: newY)
-        
-        print("Player Position\(self.position)")
-  */
-        
-        if thrusting
+        if isThrusting
         {
             applyThrust()
         }
-        else if reversing
+        else if isReversing
         {
             reverseThrust()
         }
         
-        self.physicsBody?.applyTorque(CGFloat(0.5 * delta))
+        //self.physicsBody?.applyTorque(CGFloat(0.5 * delta))
         
         //print("Player\(self))")
     }
