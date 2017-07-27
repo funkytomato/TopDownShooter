@@ -59,11 +59,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         // Create entity manager
         entityManager = EntityManager(scene: self)
         encounterManager = EncounterManager(scene: self)
-
-        //let texture = SKTexture(imageNamed: "Spaceship")
-        //let startPosition = CGPoint(x: self.frame.width / 2, y: self.frame.height / 2)
-//        player = Spaceship(entityPosition: startPosition, entityTexture: texture)
-//        addChild(player)
         
         self.lastUpdateTime = 0
 
@@ -72,15 +67,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     func playerNode() -> Spaceship
     {
         let node = entityManager.scene.childNode(withName: "player")! as! Spaceship
-        //print("node:\(node)")
+        ////print("node:\(node)")
         
         return node
-        //return entityManager.scene.childNode(withName: "spaceship")! as! Spaceship
     }
     
     func initaliseExplosionAtlas()
     {
-        //print("initaliseAlas called")
+        ////print("initaliseAlas called")
         
         explosionAtlas = SKTextureAtlas(named:"Explosions")
         
@@ -144,8 +138,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         let asteroidRotation = SKAction.rotate(byAngle: -CGFloat.pi * 2, duration: TimeInterval(0.008 * asteroidDistance))
         let moveAsteroid = SKAction.moveBy(x: 0, y: -asteroidDistance - 100, duration: TimeInterval(0.008 * asteroidDistance))
         let removeAsteroid = SKAction.removeFromParent()
-        //print("asteroid distance\(-asteroidDistance - 100)")
-        //print("asteroid rotation\(-CGFloat.pi * 2)")
+        ////print("asteroid distance\(-asteroidDistance - 100)")
+        ////print("asteroid rotation\(-CGFloat.pi * 2)")
         
         //Group movement and rotation to run sychronously
         let rotateAndMove = SKAction.group([asteroidRotation, moveAsteroid])
@@ -193,6 +187,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
     {
+        
         for touch in touches
         {
             let location = touch.location(in: self)
@@ -204,13 +199,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate
                 
                 if node.name == "leftBtn"
                 {
-                    playerNode().physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-                    playerNode().physicsBody?.applyImpulse(CGVector(dx: -100, dy: 0))
+      
+                    let originalTexture = SKTexture(imageNamed: "leftBtn")
+                    let pressedTexture = SKTexture(imageNamed: "leftBtn-2")
+                    let pressed:SKAction = SKAction.animate(with: [pressedTexture], timePerFrame: 1.0)
+                    let released:SKAction = SKAction.animate(with: [originalTexture], timePerFrame: 1.0)
+                    
+                    let buttonAnimation = SKAction.sequence([pressed,released])
+                    node.run(buttonAnimation)
+    
+                    /*
+                    let grow:SKAction = SKAction.scale(by: 1.0, duration: 1.0)
+                    let shrink:SKAction = SKAction.scale(by: -1.0, duration: 1.0)
+                    let seq = SKAction.sequence([grow, shrink])
+                    
+                    node.run(seq)
+                    */
+                    playerNode().turnLeft()
                 }
                 else if node.name == "rightBtn"
                 {
-                    playerNode().physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-                    playerNode().physicsBody?.applyImpulse(CGVector(dx: 100, dy: 0))
+                    playerNode().turnRight()
                 }
                 else if node.name == "upBtn"
                 {
@@ -224,20 +233,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate
                 }
                 else if node.name == "plusBtn"
                 {
-
+                    playerNode().thrusting = true
                 }
                 else if node.name == "minusBtn"
                 {
-
+                    playerNode().reversing = true
                 }
-               
-                
-            
             }
- 
-
         }
-        
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?)
@@ -248,6 +251,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?)
     {
         for t in touches { self.touchUp(atPoint: t.location(in: self)) }
+        
+        playerNode().removeAllActions()
+        playerNode().thrusting = false
+        playerNode().reversing = false
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?)
@@ -268,7 +275,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         // Calculate time since last update
         let dt = currentTime - self.lastUpdateTime
+
         
+        playerNode().update(dt)
         
         self.lastUpdateTime = currentTime
     }
