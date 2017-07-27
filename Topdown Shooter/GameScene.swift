@@ -237,7 +237,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate
                 }
                 else if node.name == "minusBtn"
                 {
-                    playerNode().reversing = true
+                    addChild(playerNode().shootGuns())
+                    //playerNode().reversing = true
                 }
             }
         }
