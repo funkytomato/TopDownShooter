@@ -13,7 +13,7 @@ import SpriteKit
 
 class Asteroid: GameEntity
 {
-    let asteroidDust = SKEmitterNode(fileNamed: "asteroidDust")
+    //let asteroidDust = SKEmitterNode(fileNamed: "asteroidDust")
     
     required init?(coder aDecoder: NSCoder)
     {
@@ -22,14 +22,17 @@ class Asteroid: GameEntity
     
     init(entityPosition: CGPoint, entityTexture: SKTexture, size: CGSize)
     {
-        super.init(position: entityPosition, texture: entityTexture)
+        let texture = SKTexture(imageNamed: "meteorBrown_med1")
+        super.init(position:entityPosition, texture: texture)
         name = "asteroid"
         self.size = size
         self.position = entityPosition
         self.color = SKColor.blue
         self.zPosition = 1
-        asteroidDust!.isHidden = false
-        addChild(asteroidDust!)
+        
+   //     asteroidDust!.isHidden = false
+    //    addChild(asteroidDust!)
+        
         configureCollisionBody()
         
     }
@@ -40,12 +43,10 @@ class Asteroid: GameEntity
         self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.width / 2.0)
         self.zRotation = 2.0
         self.physicsBody?.allowsRotation = true
-        self.physicsBody?.affectedByGravity = true
+        self.physicsBody?.affectedByGravity = false
         self.physicsBody?.restitution = 1
-        self.physicsBody?.isDynamic = false
+        self.physicsBody?.isDynamic = true
         self.physicsBody?.mass = 1
-        //self.physicsBody?.mass = (self.size.width + self.size.height / 2) / 100
-        //print("Asteroid mass:\((self.size.width + self.size.height / 2) / 100)")
         self.physicsBody?.restitution = (self.size.width + self.size.height / 2) / 100
         print("Asteroid Restitution:\((self.size.width + self.size.height / 2) / 100)")
         
@@ -56,7 +57,7 @@ class Asteroid: GameEntity
         //self.physicsBody?.collisionBitMask = PhysicsCollisionBitMask.Ground
         
         //Defines what logical 'categories' of bodies this body generates intersection notifications with. Defaults to all bits cleared (no categories).
-        self.physicsBody?.contactTestBitMask = PhysicsCollisionBitMask.Player | PhysicsCollisionBitMask.Alien
+        self.physicsBody?.contactTestBitMask = PhysicsCollisionBitMask.Player | PhysicsCollisionBitMask.Alien | PhysicsCollisionBitMask.Laser
 
     }
     
@@ -81,13 +82,14 @@ class Asteroid: GameEntity
         {
             //health -= 5.0
         }
-        else if bodyA == "ground" ||
-            bodyB == "ground"
+        else if bodyA == "laser" ||
+            bodyB == "laser"
         {
             //health -= 1.0
+            let mainScene = scene as! GameScene
+            mainScene.createExplosion(nodeToExplode: self)
         }
         
         //asteroidDust!.isHidden = health > 30.0
-
     }
 }
