@@ -27,9 +27,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     var repeatActionPlayer = SKAction()
     var player: Spaceship!
     
-    //Scene Layers
-    let bulletLayerNode = SKNode()
-    //let particleLayerNode = SKNode()
+
     
     //Explosion
     var explosionAtlas: SKTextureAtlas?
@@ -48,22 +46,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     var moveAndRemoveLaser = SKAction()
     var createAndRemoveExplosion = SKAction()
     
-/*    override func didMove(to view: SKView)
-    {
-        print("didMove")
-
-        loadSceneNodes()
-        
-        self.lastUpdateTime = 0
-
-        
-        player.configureSpaceship()
-
-        
- //       encounterManager.addEncountersToWorld(world: self)
-        
-    }
-  */
     
     func loadSceneNodes()
     {
@@ -103,26 +85,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate
 
         loadSceneNodes()
         
-
-        
-        //READ THIS DUMBASS!!!
-        //SceneDidLoad is being called twice so 2nd player conflicts
-        //
-//        player = entityManager.scene.childNode(withName: "player")! as! Spaceship
-//        player.configureSpaceship()
-        
-        //entityManager.spawnSpaceship(startPosition: node.position)
-        
     }
     
-/*    func playerNode() -> Spaceship
-    {
-        let node = entityManager.scene.childNode(withName: "player")! as! Spaceship
-        ////print("node:\(node)")
-        
-        return node
-    }
-  */
+
     func initaliseExplosionAtlas()
     {
         ////print("initaliseAlas called")
@@ -270,7 +235,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
                 }
                 else if node.name == "minusBtn"
                 {
-                    addChild(player.shootGuns())
+                    entityManager.spawnLaser(nodeFiredFrom: player)
                 }
             }
         }
@@ -321,7 +286,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     override func didMove(to view: SKView)
     {
         player.configureSpaceship()
-//        encounterManager.addEncountersToWorld(world: self)
+        encounterManager.addEncountersToWorld(world: self)
     }
   
     func didBegin(_ contact: SKPhysicsContact)
