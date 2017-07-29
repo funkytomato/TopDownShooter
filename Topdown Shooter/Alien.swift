@@ -24,7 +24,7 @@ class Alien: GameEntity
     {
 
         super.init(position: entityPosition, texture: entityTexture)
-        name = "alien"
+        self.name = "alien"
         self.size = CGSize(width: 35, height: 25)
         self.position = entityPosition
         self.zPosition = 1
@@ -66,9 +66,9 @@ class Alien: GameEntity
         let bodyA = contact.bodyA.node?.name
         let bodyB = contact.bodyB.node?.name
         
-        print("body\(body)")
-        print("contact A\(contact.bodyA.node?.name)")
-        print("contact B\(contact.bodyB.node?.name)")
+        //print("body\(body)")
+        //print("contact A\(contact.bodyA.node?.name)")
+        //print("contact B\(contact.bodyB.node?.name)")
         
         if bodyA == "asteroid" ||
             bodyB == "asteroid"
