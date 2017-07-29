@@ -31,9 +31,6 @@ class Spaceship: GameEntity
     let ventingPlasma = SKEmitterNode(fileNamed: "ventingPlasma.sks")
     var healthBar : HealthBar?
     
-    //let spaceshipAtlas = SKTextureAtlas(named:"Spaceship")
-    //var spaceshipSprites = Array<SKTexture>()
-    
     
     var moveAndRemoveLaser = SKAction()
     
@@ -43,34 +40,55 @@ class Spaceship: GameEntity
         super.init(coder:aDecoder)
     }
     
+    override init()
+    {
+        super.init()
+        
+        configureSpaceship()
+    }
+    
     init(entityPosition: CGPoint, entityTexture: SKTexture)
     {
+        
+        //Create Sprite
         let texture = SKTexture(imageNamed: "Spaceship")
         super.init(position:entityPosition, texture: texture)
+        
+        //Define Sprite Node
         self.name = "spaceship"
         self.size = CGSize(width: 50, height: 50)
         self.position = entityPosition
         self.zPosition = 1
-        //ventingPlasma!.isHidden = true
-        //addChild(ventingPlasma!)
-        configureCollisionBody()
+        
+        configureSpaceship()
+        
+    }
 
+    func configureSpaceship()
+    {
+        configureVentPlasma()
+        configureCollisionBody()
+        configureHealthBar()
+    }
+    
+    func configureVentPlasma()
+    {
+        //Configure venting plasma particle effect
+        ventingPlasma!.isHidden = false
+        addChild(ventingPlasma!)
+    }
+    
+    
+    func configureHealthBar()
+    {
+        //Configure the health bar
         healthBar = HealthBar(size: self.size, barOffset: 25)
         addChild(healthBar!)
-        
-
     }
-    /*
-    func createSpriteAtlas()
-    {
-        spaceshipSprites.append(spaceshipAtlas.textureNamed("spaceflier_01_a"))
-        spaceshipSprites.append(spaceshipAtlas.textureNamed("spaceflier_02_a"))
-        spaceshipSprites.append(spaceshipAtlas.textureNamed("spaceflier_03_a"))
-    }
-    */
     
     func configureCollisionBody()
     {
+        print("configureCollisionBody")
         self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.width / 2)
         self.physicsBody?.allowsRotation = false
         self.physicsBody?.friction = 0.3
@@ -121,57 +139,44 @@ class Spaceship: GameEntity
             ventingPlasma?.isHidden = false
         }
         
- //       ventingPlasma!.isHidden = healthBar?.currentHealth() > 30.0
+   //     ventingPlasma!.isHidden = healthBar?.currentHealth() > 30.0
         
         if !(healthBar?.isAlive())!
         {
             
-            //Blow up spaceship
+            //Spaceship destroyed
             healthBar?.health = 0.0
+            
+            //Blow up spaceship
             let mainScene = scene as! GameScene
             mainScene.createExplosion(nodeToExplode: self)
             
+            //Restore health
             healthBar?.health = 100.0
         }
     }
     
     func applyThrust()
     {
-   
+        
+        
         let dx = (30 * cos(heading()))
         let dy = (30 * sin(heading()))
         
         let impulse = CGVector(dx: dx, dy: dy)
+        
         self.physicsBody?.applyImpulse(impulse)
 
-        //self.rotateToVelocity((self.physicsBody?.velocity)!, rate: 1)
-
+        //Limit spaceship's speed
+        if (self.physicsBody?.velocity.dx)! > CGFloat(800.0)
+        {
+            self.physicsBody?.velocity = CGVector(dx: 200, dy: self.physicsBody!.velocity.dy);
+        }
         
-        /*
-        //  Applying rocket thrust
-        //
-         
-        let thrust : CGFloat = 0.12
-        var thrustVector : CGVector
-        
-        thrustVector = CGPoint(Float(thrust)*cosf(Float(heading())),
-                               Float(thrust)*sinf(Float(heading())));
-        self.physicsBody?.applyForce(thrustVector)
-        */
-        
-        
-        //Applying lateral thrust
-        //
-/*
-        let thrust : CGFloat = 0.01
-        var thrustVector : CGVector
-        
-        thrustVector = CGPoint(Float(thrust)*cosf(Float(heading())),
-                               Float(thrust)*sinf(Float(heading())));
-        
-        self.physicsBody?.applyTorque(thrustVector)
-        
-  */
+        if (self.physicsBody?.velocity.dy)! > CGFloat(800.0)
+        {
+            self.physicsBody?.velocity = CGVector(dx: (self.physicsBody?.velocity.dx)!, dy: 200)
+        }
     }
     
     func reverseThrust()
@@ -202,7 +207,7 @@ class Spaceship: GameEntity
         
     }
     
-    func turnLeft()
+    func rotateLeft()
     {
         //let angle : CGFloat = π / 4   //45 degrees
 
@@ -214,7 +219,7 @@ class Spaceship: GameEntity
         
     }
     
-    func turnRight()
+    func rotateRight()
     {
         
         let rotate : SKAction = SKAction.rotate(byAngle: -rotateAngle, duration: 0)
@@ -226,37 +231,39 @@ class Spaceship: GameEntity
     
     func shootGuns() -> SKNode
     {
+        //Define the target point
         let laserDistance = CGFloat(2000)
-        
         let dx = (laserDistance * cos(heading()))
         let dy = (laserDistance * sin(heading()))
         
         //The Laser creation and deletion sequence
         let moveLaser = SKAction.moveBy(x: dx, y: dy, duration: TimeInterval(0.001 * laserDistance))
-
         let removeLaser = SKAction.removeFromParent()
         moveAndRemoveLaser = SKAction.sequence([moveLaser, removeLaser])
         
-        
-        
+        //Create the laser
         let texture = SKTexture(imageNamed: "laserBlue01")
         let laser = SKSpriteNode(texture: texture)
         laser.name = "laser"
+        laser.position.y = self.position.y
+        laser.position.x = self.position.x
         laser.zRotation = self.zRotation
         laser.zPosition = 1
         
-        laser.physicsBody?.allowsRotation = false
+        //Create the physics body
         laser.physicsBody = SKPhysicsBody(rectangleOf: laser.size)
-        laser.physicsBody?.categoryBitMask = PhysicsCollisionBitMask.Laser
-        laser.physicsBody?.collisionBitMask = PhysicsCollisionBitMask.Asteroid
-        laser.physicsBody?.contactTestBitMask = PhysicsCollisionBitMask.Alien
+        laser.physicsBody?.allowsRotation = false
+        laser.physicsBody?.usesPreciseCollisionDetection = true
         laser.physicsBody?.isDynamic = false
         laser.physicsBody?.affectedByGravity = false
         laser.physicsBody?.mass = 1
         
-        laser.position.y = self.position.y
-        laser.position.x = self.position.x
-        
+        //Set the physics body
+        laser.physicsBody?.categoryBitMask = PhysicsCollisionBitMask.Laser
+        laser.physicsBody?.collisionBitMask = PhysicsCollisionBitMask.Asteroid
+        laser.physicsBody?.contactTestBitMask = PhysicsCollisionBitMask.Alien
+
+        //Set the laser action running
         laser.run(moveAndRemoveLaser)
 
         return laser
@@ -271,11 +278,11 @@ class Spaceship: GameEntity
 
         if isTurningLeft
         {
-            turnLeft()
+            rotateLeft()
         }
         else if isTurningRight
         {
-            turnRight()
+            rotateRight()
         }
         
         if isThrusting
@@ -286,9 +293,5 @@ class Spaceship: GameEntity
         {
             reverseThrust()
         }
-        
-        //self.physicsBody?.applyTorque(CGFloat(0.5 * delta))
-        
-        //print("Player\(self))")
     }
 }
