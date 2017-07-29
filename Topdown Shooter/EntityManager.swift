@@ -26,7 +26,16 @@ struct PhysicsCollisionBitMask
 
 class EntityManager
 {
+    
+    
+    var moveAndRemoveLaser = SKAction()
+    
     let scene: SKScene
+    
+    //Scene Layers
+    let bulletLayerNode = SKNode()
+    let particleLayerNode = SKNode()
+    
     
     init(scene: SKScene)
     {
@@ -101,26 +110,98 @@ class EntityManager
     func spawnLaser(nodeFiredFrom: SKNode)
     {
         
-        let laser = SKSpriteNode(imageNamed: "laserBlue01")
-        laser.size = CGSize(width: 50, height: 20)
-        laser.position = CGPoint(x: nodeFiredFrom.position.x + 25, y: nodeFiredFrom.position.y + 420)
         
-        laser.physicsBody?.allowsRotation = false
+        guard let node = nodeFiredFrom as? Spaceship else {
+            fatalError("Not Spaceship!")
+        }
+
+        
+        //Define the target point
+        let laserDistance = CGFloat(2000)
+        let dx = (laserDistance * cos(node.heading()) + node.position.x)
+        let dy = (laserDistance * sin(node.heading()) + node.position.y)
+        
+        //Define the start location
+        let start = CGFloat(50)
+        let dxStart = (start * cos(node.heading()) + node.position.x)
+        let dyStart = (start * sin(node.heading()) + node.position.y)
+        
+        //The Laser creation and deletion sequence
+        let moveLaser = SKAction.moveBy(x: dx, y: dy, duration: TimeInterval(0.001 * laserDistance))
+        let removeLaser = SKAction.removeFromParent()
+        moveAndRemoveLaser = SKAction.sequence([moveLaser, removeLaser])
+        
+        //Create the laser
+        let texture = SKTexture(imageNamed: "laserBlue01")
+        let laser = SKSpriteNode(texture: texture)
+        laser.name = "laser"
+        laser.size = CGSize(width: 10, height: 50)
+        
+        print("laser zrotation\(laser.zRotation)")
+        print("player zrotation\(node.zRotation)")
+        laser.zRotation = node.zRotation
+        
+
+        
+        print("laser zrotation\(laser.zRotation)")
+        
+        laser.zPosition = 2
+
+        print("Spaceship position\(node.position)")
+
+        
+       // let startLaserPos = node.convert(CGPoint(x: node.position.x, y: node.position.y + 25), from: node)
+        laser.position = CGPoint(x: dxStart, y: dyStart)
+
+  //      laser.position.y = node.position.y
+//        laser.position.x = node.position.x
+
+        
+        //laser.position.x = node.position.x - sin(node.size.height / 2)
+        //laser.position.y = (node.position.y + 90) + cos(node.size.height / 2)
+
+        
+        //let laserXPos = laser.position.x - sinf * (laser.size.height / 2)
+        //let laserYPos = laser.position.y + cosf * laser.size.height / 2
+        
+        print("Laser Position\(laser.position)")
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        //Create the physics body
         laser.physicsBody = SKPhysicsBody(rectangleOf: laser.size)
-        laser.physicsBody?.categoryBitMask = PhysicsCollisionBitMask.Laser
-        laser.physicsBody?.collisionBitMask = PhysicsCollisionBitMask.Alien
-        laser.physicsBody?.contactTestBitMask = PhysicsCollisionBitMask.Alien
+        laser.physicsBody?.allowsRotation = false
         laser.physicsBody?.isDynamic = false
         laser.physicsBody?.affectedByGravity = false
+        laser.physicsBody?.usesPreciseCollisionDetection = true
         
-        laser.zPosition = 0
-        
-        
-        //let randomPosition = random(min: 0, max: 500)
-        laser.position.y = nodeFiredFrom.position.y
-        laser.position.x = nodeFiredFrom.position.x + 10
-        
+        //Set the physics body
+        laser.physicsBody?.categoryBitMask = PhysicsCollisionBitMask.Laser
+        laser.physicsBody?.collisionBitMask = PhysicsCollisionBitMask.None
+        laser.physicsBody?.contactTestBitMask = PhysicsCollisionBitMask.Alien
+
+        //Set the laser action running
+        laser.run(moveAndRemoveLaser)
+
         add(laser)
+
+    
+
+    }
+    
+    
+    // Rotates a point (or vector) about the z-axis
+    func rotate(vector:CGVector, angle:CGFloat) -> CGVector
+    {
+        let rotatedX = vector.dx * cos(angle) - vector.dy * sin(angle)
+        let rotatedY = vector.dx * sin(angle) + vector.dy * cos(angle)
+        return CGVector(dx: rotatedX, dy: rotatedY)
     }
     
     /*
