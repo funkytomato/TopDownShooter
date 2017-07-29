@@ -21,7 +21,9 @@ class Spaceship: GameEntity
     */
     
     //let rotateAngle : CGFloat = π / 4   //45 degrees
-    let rotateAngle : CGFloat = π / 28
+//    let rotateAngle : CGFloat = π / 28
+    let rotateAngle = (CGFloat(M_PI_4/2))
+
     
     var isTurningLeft = false
     var isTurningRight = false
@@ -74,7 +76,8 @@ class Spaceship: GameEntity
     func configureVentPlasma()
     {
         //Configure venting plasma particle effect
-        ventingPlasma!.isHidden = false
+        ventingPlasma!.isHidden = true
+        ventingPlasma?.position = CGPoint(x: 0.5, y: -10)
         addChild(ventingPlasma!)
     }
     
@@ -139,7 +142,7 @@ class Spaceship: GameEntity
             ventingPlasma?.isHidden = false
         }
         
-   //     ventingPlasma!.isHidden = healthBar?.currentHealth() > 30.0
+        ventingPlasma!.isHidden = (healthBar?.currentHealth())! > CGFloat(30.0)
         
         if !(healthBar?.isAlive())!
         {
@@ -210,8 +213,10 @@ class Spaceship: GameEntity
     func rotateLeft()
     {
         //let angle : CGFloat = π / 4   //45 degrees
+        //let rotateAngle = (CGFloat(M_PI_4/2))
 
-        let rotate : SKAction = SKAction.rotate(byAngle: rotateAngle, duration: 0)
+        let rotate : SKAction = SKAction.rotate(byAngle: rotateAngle, duration: 1)
+        //let rotate : SKAction = SKAction.rotate(byAngle: rotateAngle, duration: 0)
         self.run(rotate)
 
         
@@ -228,50 +233,8 @@ class Spaceship: GameEntity
         
         //print("zRotation:\(self.zRotation)")
     }
-    
-    func shootGuns() -> SKNode
-    {
-        //Define the target point
-        let laserDistance = CGFloat(2000)
-        let dx = (laserDistance * cos(heading()))
-        let dy = (laserDistance * sin(heading()))
-        
-        //The Laser creation and deletion sequence
-        let moveLaser = SKAction.moveBy(x: dx, y: dy, duration: TimeInterval(0.001 * laserDistance))
-        let removeLaser = SKAction.removeFromParent()
-        moveAndRemoveLaser = SKAction.sequence([moveLaser, removeLaser])
-        
-        //Create the laser
-        let texture = SKTexture(imageNamed: "laserBlue01")
-        let laser = SKSpriteNode(texture: texture)
-        laser.name = "laser"
-        laser.position.y = self.position.y
-        laser.position.x = self.position.x
-        laser.zRotation = self.zRotation
-        laser.zPosition = 1
-        
-        //Create the physics body
-        laser.physicsBody = SKPhysicsBody(rectangleOf: laser.size)
-        laser.physicsBody?.allowsRotation = false
-        laser.physicsBody?.usesPreciseCollisionDetection = true
-        laser.physicsBody?.isDynamic = false
-        laser.physicsBody?.affectedByGravity = false
-        laser.physicsBody?.mass = 1
-        
-        //Set the physics body
-        laser.physicsBody?.categoryBitMask = PhysicsCollisionBitMask.Laser
-        laser.physicsBody?.collisionBitMask = PhysicsCollisionBitMask.Asteroid
-        laser.physicsBody?.contactTestBitMask = PhysicsCollisionBitMask.Alien
 
-        //Set the laser action running
-        laser.run(moveAndRemoveLaser)
 
-        return laser
-
-        
-    }
-    
-    
     override func update(_ delta: TimeInterval)
     {
  //       self.rotateToVelocity((self.physicsBody?.velocity)!, rate: 1)
