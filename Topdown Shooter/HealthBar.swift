@@ -13,9 +13,7 @@ class HealthBar : SKNode
     
     let fullHealth: CGFloat
     var health: CGFloat
-    //var healthBarFullWidth: CGFloat
     var healthBar: SKShapeNode?
-    //var barOffset: CGFloat
     
     let soundAction = SKAction.playSoundFileNamed("smallHit.wav", waitForCompletion: false)
     
@@ -32,9 +30,7 @@ class HealthBar : SKNode
         
         self.fullHealth = 100
         self.health = 100
-      //  self.barOffset = 0
-        
-        //healthBarFullWidth = 30
+
         healthBar = SKShapeNode(rectOf: CGSize(width: size.width, height: 5), cornerRadius: 5)
         healthBar?.fillColor = UIColor.green
         healthBar?.strokeColor = UIColor.green
@@ -74,7 +70,8 @@ class HealthBar : SKNode
         healthBar?.isHidden = false
         let healthScale = health/fullHealth
         let scaleAction = SKAction.scaleX(to: healthScale, duration: 0.5)
-        healthBar?.run(SKAction.group([soundAction, scaleAction]))
+        let fadeAction = SKAction.fadeOut(withDuration: 1.0)
+        healthBar?.run(SKAction.group([soundAction, scaleAction, fadeAction]))
         
 /*        if health == 0
         {
