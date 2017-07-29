@@ -16,6 +16,11 @@ class GameEntity: SKSpriteNode
         super.init(coder: aDecoder)
     }
     
+    init()
+    {
+        super.init(texture: nil, color: UIColor.white, size: CGSize(width: 0, height: 0))
+    }
+    
     init(position: CGPoint, texture: SKTexture)
     {
         super.init(texture: texture, color: SKColor.white, size: texture.size())
