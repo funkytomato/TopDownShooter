@@ -21,17 +21,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     //var graphs = [String : GKGraph]()
     
     private var lastUpdateTime : TimeInterval = 0
-    private var label : SKLabelNode?
-    private var spinnyNode : SKShapeNode?
+
     
     //Player sprites
-    //let spaceshipAtlas = SKTextureAtlas(named:"Spaceship")
-    //var playerSprites = Array<SKTexture>()
     var repeatActionPlayer = SKAction()
     var player: Spaceship!
     
     //Scene Layers
-    //let bulletLayerNode = SKNode()
+    let bulletLayerNode = SKNode()
     //let particleLayerNode = SKNode()
     
     //Explosion
@@ -51,29 +48,81 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     var moveAndRemoveLaser = SKAction()
     var createAndRemoveExplosion = SKAction()
     
+/*    override func didMove(to view: SKView)
+    {
+        print("didMove")
+
+        loadSceneNodes()
+        
+        self.lastUpdateTime = 0
+
+        
+        player.configureSpaceship()
+
+        
+ //       encounterManager.addEncountersToWorld(world: self)
+        
+    }
+  */
+    
+    func loadSceneNodes()
+    {
+        guard let node = childNode(withName: "player") as? Spaceship else {
+            fatalError("Sprite Nodes not loaded")
+        }
+        self.player = node
+    /*
+        guard let landBackground = childNode(withName: "landBackground")
+            as? SKTileMapNode else {
+                fatalError("Background node not loaded")
+        }
+        self.landBackground = landBackground
+        
+        guard let objectsTileMap = childNode(withName: "objects")
+            as? SKTileMapNode else {
+                fatalError("Objects node not loaded")
+        }
+        self.objectsTileMap = objectsTileMap
+ */
+    }
+
     override func sceneDidLoad()
     {
+        print("sceneDidLoad")
+        
         self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
         self.physicsWorld.contactDelegate = self
 
         // Create entity manager
         entityManager = EntityManager(scene: self)
         encounterManager = EncounterManager(scene: self)
-        
+
         self.lastUpdateTime = 0
         
         initaliseExplosionAtlas()
 
+        loadSceneNodes()
+        
+
+        
+        //READ THIS DUMBASS!!!
+        //SceneDidLoad is being called twice so 2nd player conflicts
+        //
+//        player = entityManager.scene.childNode(withName: "player")! as! Spaceship
+//        player.configureSpaceship()
+        
+        //entityManager.spawnSpaceship(startPosition: node.position)
+        
     }
     
-    func playerNode() -> Spaceship
+/*    func playerNode() -> Spaceship
     {
         let node = entityManager.scene.childNode(withName: "player")! as! Spaceship
         ////print("node:\(node)")
         
         return node
     }
-    
+  */
     func initaliseExplosionAtlas()
     {
         ////print("initaliseAlas called")
@@ -133,11 +182,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate
 
     func createExplosion(nodeToExplode: SKNode)
     {
+        
         nodeToExplode.run(createAndRemoveExplosion)
-        
-        //nodeToExplode.run(explosionAction)
-        //nodeToExplode.run(explosionSound)
-        
     }
     
     func createActions()
@@ -174,32 +220,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func touchDown(atPoint pos : CGPoint)
     {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode?
-        {
-            n.position = pos
-            n.strokeColor = SKColor.green
-            self.addChild(n)
-        }
+
     }
     
     func touchMoved(toPoint pos : CGPoint)
     {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode?
-        {
-            n.position = pos
-            n.strokeColor = SKColor.blue
-            self.addChild(n)
-        }
+
     }
     
     func touchUp(atPoint pos : CGPoint)
     {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode?
-        {
-            n.position = pos
-            n.strokeColor = SKColor.red
-            self.addChild(n)
-        }
+
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
@@ -217,50 +248,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate
                 if node.name == "leftBtn"
                 {
                     
-                    playerNode().isTurningLeft = true
-                    
-                    
-      /*
-                    let originalTexture = SKTexture(imageNamed: "leftBtn")
-                    let pressedTexture = SKTexture(imageNamed: "leftBtn-2")
-                    let pressed:SKAction = SKAction.animate(with: [pressedTexture], timePerFrame: 1.0)
-                    let released:SKAction = SKAction.animate(with: [originalTexture], timePerFrame: 1.0)
-                    
-                    let buttonAnimation = SKAction.sequence([pressed,released])
-                    node.run(buttonAnimation)
-    */
-                    /*
-                    let grow:SKAction = SKAction.scale(by: 1.0, duration: 1.0)
-                    let shrink:SKAction = SKAction.scale(by: -1.0, duration: 1.0)
-                    let seq = SKAction.sequence([grow, shrink])
-                    
-                    node.run(seq)
-                    */
-                    //playerNode().turnLeft()
+                    player.isTurningLeft = true
                 }
                 else if node.name == "rightBtn"
                 {
-                    playerNode().isTurningRight = true
-//                    playerNode().turnRight()
+                    player.isTurningRight = true
                 }
                 else if node.name == "upBtn"
                 {
-                    playerNode().physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-                    playerNode().physicsBody?.applyImpulse(CGVector(dx: 0, dy: 100))
+                    player.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+                    player.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 100))
                 }
                 else if node.name == "downBtn"
                 {
-                    playerNode().physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-                    playerNode().physicsBody?.applyImpulse(CGVector(dx: 0, dy: -100))
+                    player.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+                    player.physicsBody?.applyImpulse(CGVector(dx: 0, dy: -100))
                 }
                 else if node.name == "plusBtn"
                 {
-                    playerNode().isThrusting = true
+                    player.isThrusting = true
                 }
                 else if node.name == "minusBtn"
                 {
-                    addChild(playerNode().shootGuns())
-                    //playerNode().reversing = true
+                    addChild(player.shootGuns())
                 }
             }
         }
@@ -275,11 +285,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     {
         for t in touches { self.touchUp(atPoint: t.location(in: self)) }
         
-        playerNode().removeAllActions()
-        playerNode().isThrusting = false
-        playerNode().isReversing = false
-        playerNode().isTurningLeft = false
-        playerNode().isTurningRight = false
+        player.removeAllActions()
+        player.isThrusting = false
+        player.isReversing = false
+        player.isTurningLeft = false
+        player.isTurningRight = false
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?)
@@ -302,16 +312,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         let dt = currentTime - self.lastUpdateTime
 
         
-        playerNode().update(dt)
+        player.update(dt)
+
         
         self.lastUpdateTime = currentTime
     }
 
     override func didMove(to view: SKView)
     {
-        encounterManager.addEncountersToWorld(world: self)
+        player.configureSpaceship()
+//        encounterManager.addEncountersToWorld(world: self)
     }
-    
+  
     func didBegin(_ contact: SKPhysicsContact)
     {
         
@@ -349,17 +361,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate
                 nodeA?.collidedWith(firstBody, contact: contact)
                 secondBody.node?.removeFromParent()
                 
-                //contact.bodyA.node?.run(self.explosionAction)
-                //contact.bodyA.node?.run(self.explosionSound)
             }
             else if contact.bodyB.node?.name == "asteroid"
             {
                 let nodeB = contact.bodyB.node as? Asteroid
                 nodeB?.collidedWith(secondBody, contact: contact)
                 firstBody.node?.removeFromParent()
-                
-                //contact.bodyB.node?.run(self.explosionAction)
-                //contact.bodyB.node?.run(self.explosionSound)
+
             }
         }
         
