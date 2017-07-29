@@ -48,6 +48,8 @@ class EncounterManager
                         {
                             case "player":
                                 entityManager.spawnSpaceship(startPosition: node.position)
+                            case "spaceship":
+                                entityManager.spawnSpaceship(startPosition: node.position)
                             case "asteroid":
                                 entityManager.spawnAsteroid(startPosition: node.position)
                             case "alien":
