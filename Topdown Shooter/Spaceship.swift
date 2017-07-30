@@ -31,6 +31,7 @@ class Spaceship: GameEntity
     var isReversing = false
  
     let ventingPlasma = SKEmitterNode(fileNamed: "ventingPlasma.sks")
+    let thrusterPlasma = SKEmitterNode(fileNamed: "EngineFlare.sks")
     var healthBar : HealthBar?
     
     
@@ -60,7 +61,7 @@ class Spaceship: GameEntity
         self.name = "spaceship"
         self.size = CGSize(width: 50, height: 50)
         self.position = entityPosition
-        self.zPosition = 1
+        self.zPosition = GameZLayer.Player
         
         configureSpaceship()
         
@@ -68,6 +69,7 @@ class Spaceship: GameEntity
 
     func configureSpaceship()
     {
+        configureThrusterPlasma()
         configureVentPlasma()
         configureCollisionBody()
         configureHealthBar()
@@ -78,7 +80,17 @@ class Spaceship: GameEntity
         //Configure venting plasma particle effect
         ventingPlasma!.isHidden = true
         ventingPlasma?.position = CGPoint(x: 0.5, y: -10)
+        ventingPlasma?.zPosition = GameZLayer.Particles
         addChild(ventingPlasma!)
+    }
+    
+    func configureThrusterPlasma()
+    {
+        //Configure thruster plasma particle effect
+        thrusterPlasma!.isHidden = false
+        thrusterPlasma?.position = CGPoint(x: 0.5, y: -50)
+        thrusterPlasma?.zPosition = GameZLayer.Particles
+        addChild(thrusterPlasma!)
     }
     
     
@@ -86,6 +98,7 @@ class Spaceship: GameEntity
     {
         //Configure the health bar
         healthBar = HealthBar(size: self.size, barOffset: 25)
+        healthBar?.zPosition = GameZLayer.HUD
         addChild(healthBar!)
     }
     
@@ -162,6 +175,7 @@ class Spaceship: GameEntity
     func applyThrust()
     {
         
+        thrusterPlasma?.particleBirthRate = 1000
         
         let dx = (30 * cos(heading()))
         let dy = (30 * sin(heading()))
@@ -180,6 +194,7 @@ class Spaceship: GameEntity
         {
             self.physicsBody?.velocity = CGVector(dx: (self.physicsBody?.velocity.dx)!, dy: 200)
         }
+        
     }
     
     func reverseThrust()
