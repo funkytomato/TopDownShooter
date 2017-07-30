@@ -255,6 +255,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         player.isReversing = false
         player.isTurningLeft = false
         player.isTurningRight = false
+        
+        //Turn the thruster emitter particle effects down
+        player.thrusterPlasma?.particleBirthRate = 15
+
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?)
