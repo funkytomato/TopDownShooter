@@ -22,6 +22,7 @@ struct PhysicsCollisionBitMask
     static let Alien:UInt32 = 0x1 << 3
     static let Laser:UInt32 = 0x1 << 4
     static let Ufo:UInt32 = 0x1 << 5
+    static let Wall:UInt32 = 0x1 << 6
 }
 
 struct GameZLayer
@@ -90,33 +91,49 @@ class EntityManager
     {
         
         
-        let randomSpeed = random(min: 0.0, max: 1)
-        print("randomSpeed\(randomSpeed)")
-
-        //Random direction
-        let randomDx = random(min: -100, max: 100)
-        let randomDy = random(min: -100, max: 100)
-        print("randomDx\(randomDx)")
-        print("randomDy\(randomDy)")
+        let randomSpeed = random(min: 0.0, max: 5)
+        //print("randomSpeed\(randomSpeed)")
         
         
         let asteroidNode = Asteroid(entityPosition: startPosition, categorySize: categorySize)
         add(asteroidNode)
         
         
+        let asteroidDir : CGFloat = randomDirection(minAngle: 0, maxAngle: 250)
+        
         //The Asteroid creation and deletion sequence
-        let asteroidDistance = CGFloat(scene.frame.height)
+        let asteroidDistance = CGFloat(scene.frame.width * 2)
         let asteroidRotation = SKAction.rotate(byAngle: -CGFloat.pi * 2, duration: TimeInterval(0.008 * asteroidDistance))
-        let moveAsteroid = SKAction.moveBy(x: randomDx + asteroidDistance , y: randomDy + asteroidDistance, duration: TimeInterval(0.008 * asteroidDistance))
+        let moveAsteroid = SKAction.moveBy(x: cos(asteroidDir) * 1000, y: sin(asteroidDir) * 1000, duration: TimeInterval(0.008 * asteroidDistance))
+        let actionSpeed =  SKAction.speed(by: randomSpeed, duration: 0)
+        
         let removeAsteroid = SKAction.removeFromParent()
         
+        print("Asteroid direction dx: \(cos(asteroidDir) * 1000) dy: \(sin(asteroidDir) * 1000)")
         
         //Group movement and rotation to run sychronously
         let rotateAndMove = SKAction.group([asteroidRotation, moveAsteroid])
-        moveAndRemoveAsteroid = SKAction.sequence([rotateAndMove, removeAsteroid])
+        moveAndRemoveAsteroid = SKAction.sequence([actionSpeed, rotateAndMove])
         
         asteroidNode.run(moveAndRemoveAsteroid)
         
+    }
+    
+    
+    func randomDirection(minAngle: UInt32, maxAngle: UInt32) -> CGFloat
+    {
+
+        
+        var degrees : UInt32
+        var radians : CGFloat
+        
+        
+        degrees = arc4random_uniform(maxAngle - minAngle) + minAngle
+        radians = CGFloat(degrees).degreesToRadians()
+        
+        //print("Radians \(radians) & \(newRadians)")
+        
+        return radians
     }
     
     /*
@@ -144,14 +161,7 @@ class EntityManager
      */
     func spawnLaser(nodeFiredFrom: SKNode)
     {
-        /*
-        let dx = (30 * cos(heading()))
-        let dy = (30 * sin(heading()))
         
-        let impulse = CGVector(dx: dx, dy: dy)
-        
-        self.physicsBody?.applyImpulse(impulse)
-        */
         
         guard let node = nodeFiredFrom as? Spaceship else {
             fatalError("Not Spaceship!")
@@ -160,20 +170,14 @@ class EntityManager
         
         //Define the target point
         let laserDistance = CGFloat(2000)
-//        let dx = (laserDistance * cos(node.heading()) + node.position.x)
-//        let dy = (laserDistance * sin(node.heading()) + node.position.y)
         let dx = (laserDistance * cos(node.heading()))
         let dy = (laserDistance * sin(node.heading()))
         
         
         //Define the start location
-        let start = CGFloat(50)
         let dxStart = (cos(node.heading()) + node.position.x)
         let dyStart = (sin(node.heading()) + node.position.y)
 
-//        let dxStart = (start + cos(node.heading()) + node.position.x)
-  //      let dyStart = (start + sin(node.heading()) + node.position.y)
-        
         
         //The Laser creation and deletion sequence
         let moveLaser = SKAction.moveBy(x: dx, y: dy, duration: TimeInterval(0.001 * laserDistance))
