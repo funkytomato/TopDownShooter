@@ -75,10 +75,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
         self.physicsWorld.contactDelegate = self
 
-        // Create entity manager
-        entityManager = EntityManager(scene: self)
-        encounterManager = EncounterManager(scene: self)
-
         self.lastUpdateTime = 0
         
         initaliseExplosionAtlas()
@@ -289,8 +285,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate
 
     override func didMove(to view: SKView)
     {
+        entityManager = EntityManager(scene: self)
+        encounterManager = EncounterManager(scene: self)
+
         player.configureSpaceship()
-        encounterManager.addEncountersToWorld(world: self)
+   //     encounterManager.addEncountersToWorld(world: self)
     }
   
     func didBegin(_ contact: SKPhysicsContact)
