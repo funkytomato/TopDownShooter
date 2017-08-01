@@ -27,9 +27,9 @@ class Ufo: GameEntity
         name = "ufo"
         self.size = CGSize(width: 35, height: 25)
         self.position = entityPosition
-        self.zPosition = 1
-        //ventingPlasma!.isHidden = true
-        //addChild(ventingPlasma!)
+        self.zPosition = GameZLayer.Player
+        ventingPlasma!.isHidden = true
+        addChild(ventingPlasma!)
         configureCollisionBody()
         
         healthBar = HealthBar(size: self.size, barOffset: 25)
@@ -92,7 +92,7 @@ class Ufo: GameEntity
             
         }
         
-        //ventingPlasma!.isHidden = healthBar.health > 30.0
+        ventingPlasma!.isHidden = (healthBar?.health)! > CGFloat(30.0)
         
         if (healthBar?.health)! < 30.0
         {
@@ -106,7 +106,7 @@ class Ufo: GameEntity
             //Blow up spaceship
             healthBar?.health = 0.0
             let mainScene = scene as! GameScene
-            //mainScene.createExplosion(nodeToExplode: self)
+            mainScene.createExplosion(nodeToExplode: self)
             
             healthBar?.health = 100.0
         }

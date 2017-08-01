@@ -138,6 +138,14 @@ class Asteroid: GameEntity
         let bodyA = contact.bodyA.node?.name
         let bodyB = contact.bodyB.node?.name
         
+        if bodyA == "wall" ||
+            bodyB == "wall"
+        {
+            let mainScene = scene as! GameScene
+            self.run(mainScene.moveAndRemoveAsteroid.reversed())
+
+        }
+        
         if bodyA == "spaceship" ||
             bodyB == "spaceship"
         {

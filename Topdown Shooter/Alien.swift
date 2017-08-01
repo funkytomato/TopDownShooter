@@ -27,7 +27,7 @@ class Alien: GameEntity
         self.name = "alien"
         self.size = CGSize(width: 35, height: 25)
         self.position = entityPosition
-        self.zPosition = 1
+        self.zPosition = GameZLayer.Player
         //ventingPlasma!.isHidden = true
         //addChild(ventingPlasma!)
         configureCollisionBody()
