@@ -51,7 +51,7 @@ class EncounterManager
                             case "spaceship":
                                 entityManager.spawnSpaceship(startPosition: node.position)
                             case "asteroid":
-                                entityManager.spawnAsteroid(startPosition: node.position)
+                                entityManager.spawnAsteroid(startPosition: node.position, categorySize: .Big)
                             case "alien":
                                 entityManager.spawnAlien(startPosition: node.position)
                             case "ufo":
