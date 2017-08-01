@@ -115,7 +115,7 @@ class EntityManager
         let rotateAndMove = SKAction.group([asteroidRotation, moveAsteroid])
         moveAndRemoveAsteroid = SKAction.sequence([rotateAndMove, removeAsteroid])
         
-       // asteroidNode.run(moveAndRemoveAsteroid)
+        asteroidNode.run(moveAndRemoveAsteroid)
         
     }
     
@@ -144,7 +144,14 @@ class EntityManager
      */
     func spawnLaser(nodeFiredFrom: SKNode)
     {
+        /*
+        let dx = (30 * cos(heading()))
+        let dy = (30 * sin(heading()))
         
+        let impulse = CGVector(dx: dx, dy: dy)
+        
+        self.physicsBody?.applyImpulse(impulse)
+        */
         
         guard let node = nodeFiredFrom as? Spaceship else {
             fatalError("Not Spaceship!")
@@ -153,14 +160,19 @@ class EntityManager
         
         //Define the target point
         let laserDistance = CGFloat(2000)
-        let dx = (laserDistance * cos(node.heading()) + node.position.x)
-        let dy = (laserDistance * sin(node.heading()) + node.position.y)
+//        let dx = (laserDistance * cos(node.heading()) + node.position.x)
+//        let dy = (laserDistance * sin(node.heading()) + node.position.y)
+        let dx = (laserDistance * cos(node.heading()))
+        let dy = (laserDistance * sin(node.heading()))
         
         
         //Define the start location
         let start = CGFloat(50)
-        let dxStart = (start * cos(node.heading()) + node.position.x)
-        let dyStart = (start * sin(node.heading()) + node.position.y)
+        let dxStart = (cos(node.heading()) + node.position.x)
+        let dyStart = (sin(node.heading()) + node.position.y)
+
+//        let dxStart = (start + cos(node.heading()) + node.position.x)
+  //      let dyStart = (start + sin(node.heading()) + node.position.y)
         
         
         //The Laser creation and deletion sequence
@@ -190,7 +202,7 @@ class EntityManager
         
         //Define the collision categories
         laser.physicsBody?.categoryBitMask = PhysicsCollisionBitMask.Laser
-        laser.physicsBody?.collisionBitMask = PhysicsCollisionBitMask.None
+        laser.physicsBody?.collisionBitMask = PhysicsCollisionBitMask.Asteroid
         laser.physicsBody?.contactTestBitMask = PhysicsCollisionBitMask.Alien | PhysicsCollisionBitMask.Asteroid
 
         
