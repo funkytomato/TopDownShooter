@@ -35,8 +35,8 @@ class Asteroid: GameEntity
         super.init(coder:aDecoder)
     }
     
-//    init(entityPosition: CGPoint, entityTexture: SKTexture, size: CGSize)
-    init(entityPosition: CGPoint, entityTexture: SKTexture, categorySize: CategorySize)
+
+    init(entityPosition: CGPoint, categorySize: CategorySize)
     {
         
         //var asteroidSize = AsteroidCategory.Tiny
@@ -113,11 +113,20 @@ class Asteroid: GameEntity
         //get current asteroid position and velocity
         let parentPosition  = self.position
         
+        
+        //Create a random number of asteroids
+        let asteroidNumber = random(min: 2, max: 7)
+        print("asteroid Number \(asteroidNumber)")
+        
         //create new smaller asteroid
         let mainScene = scene as! GameScene
-        mainScene.entityManager.spawnAsteroid(startPosition: parentPosition, categorySize: categorySize)
-        mainScene.entityManager.spawnAsteroid(startPosition: parentPosition, categorySize: categorySize)
-        mainScene.entityManager.spawnAsteroid(startPosition: parentPosition, categorySize: categorySize)
+
+        
+        for i in 0 ... asteroidNumber-1
+        {
+            print("Creating asteroid \(i)")
+            mainScene.entityManager.spawnAsteroid(startPosition: parentPosition, categorySize: categorySize)
+        }
         
         mainScene.entityManager.remove(self)
     }
@@ -167,5 +176,18 @@ class Asteroid: GameEntity
  
             asteroidDust!.isHidden = false
         }
+    }
+    
+    /*
+     Random functions used for position and size
+     */
+    func random() -> Int
+    {
+        return Int(Int(arc4random()) / 0xFFFFFFFF)
+    }
+    
+    func random(min : Int, max : Int) -> Int
+    {
+        return random() * (max - min) + min
     }
 }
