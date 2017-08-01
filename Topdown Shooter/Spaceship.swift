@@ -116,7 +116,7 @@ class Spaceship: GameEntity
         self.physicsBody?.categoryBitMask = PhysicsCollisionBitMask.Player
         
         //Defines what logical 'categories' of bodies this body responds to collisions with. Defaults to all bits set (all categories).
-        //self.physicsBody?.collisionBitMask = PhysicsCollisionBitMask.Asteroid | PhysicsCollisionBitMask.Ground | PhysicsCollisionBitMask.Alien
+        self.physicsBody?.collisionBitMask = PhysicsCollisionBitMask.Asteroid | PhysicsCollisionBitMask.Alien | PhysicsCollisionBitMask.Ufo
 
         //Defines what logical 'categories' of bodies this body generates intersection notifications with. Defaults to all bits cleared (no categories).
         self.physicsBody?.contactTestBitMask = PhysicsCollisionBitMask.Asteroid | PhysicsCollisionBitMask.Alien
@@ -187,13 +187,15 @@ class Spaceship: GameEntity
         //Limit spaceship's speed
         if (self.physicsBody?.velocity.dx)! > CGFloat(800.0)
         {
-            self.physicsBody?.velocity = CGVector(dx: 200, dy: self.physicsBody!.velocity.dy);
+            self.physicsBody?.velocity = CGVector(dx: 500, dy: self.physicsBody!.velocity.dy);
         }
         
         if (self.physicsBody?.velocity.dy)! > CGFloat(800.0)
         {
-            self.physicsBody?.velocity = CGVector(dx: (self.physicsBody?.velocity.dx)!, dy: 200)
+            self.physicsBody?.velocity = CGVector(dx: (self.physicsBody?.velocity.dx)!, dy: 500)
         }
+        
+        self.rotateToVelocity(impulse, rate: 5.0)
         
     }
     
