@@ -100,8 +100,7 @@ class EntityManager
         print("randomDy\(randomDy)")
         
         
-        let texture = SKTexture(imageNamed: "asteroid")
-        let asteroidNode = Asteroid(entityPosition: startPosition, entityTexture: texture, categorySize: categorySize)
+        let asteroidNode = Asteroid(entityPosition: startPosition, categorySize: categorySize)
         add(asteroidNode)
         
         
