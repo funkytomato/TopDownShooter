@@ -58,11 +58,11 @@ class Asteroid: GameEntity
             
         }
         
-  
-  //      let texture = SKTexture(imageNamed: "meteorBrown_big1")
+
         self.categorySize = categorySize
         
         
+        //Create the Asteroid Sprite
         super.init(position:entityPosition, texture: texture)
         self.name = "asteroid"
         self.size = texture.size()
@@ -70,9 +70,13 @@ class Asteroid: GameEntity
         self.color = SKColor.blue
         self.zPosition = GameZLayer.Asteroids
         
+        
+        //Add the Asteroid dust particle effect
         asteroidDust!.isHidden = true
         addChild(asteroidDust!)
         
+        
+        //Create and define the Asteroid physics body
         configureCollisionBody()
         
     }
@@ -83,6 +87,7 @@ class Asteroid: GameEntity
         self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.width / 2.0)
         self.zRotation = 2.0
         self.physicsBody?.allowsRotation = true
+        self.physicsBody?.linearDamping = 0
         self.physicsBody?.affectedByGravity = false
         self.physicsBody?.friction = 0
         self.physicsBody?.restitution = 1
@@ -95,11 +100,10 @@ class Asteroid: GameEntity
         self.physicsBody?.categoryBitMask = PhysicsCollisionBitMask.Asteroid
         
         //Defines what logical 'categories' of bodies this body responds to collisions with. Defaults to all bits set (all categories).
-        self.physicsBody?.collisionBitMask = PhysicsCollisionBitMask.Player
+        self.physicsBody?.collisionBitMask = PhysicsCollisionBitMask.Asteroid
         
         //Defines what logical 'categories' of bodies this body generates intersection notifications with. Defaults to all bits cleared (no categories).
-        self.physicsBody?.contactTestBitMask = PhysicsCollisionBitMask.Player | PhysicsCollisionBitMask.Alien | PhysicsCollisionBitMask.Laser  | PhysicsCollisionBitMask.Wall
-
+        self.physicsBody?.contactTestBitMask = PhysicsCollisionBitMask.Player | PhysicsCollisionBitMask.Alien | PhysicsCollisionBitMask.Laser
 
     }
    
@@ -116,10 +120,10 @@ class Asteroid: GameEntity
         
         
         //Create a random number of asteroids
-        let asteroidNumber = random(min: 2, max: 7)
+        let asteroidNumber = random(min: 2, max: 10)
         print("asteroid Number \(asteroidNumber)")
         
-        //create new smaller asteroid
+        //Get pointer the game scene
         let mainScene = scene as! GameScene
 
         
@@ -129,6 +133,7 @@ class Asteroid: GameEntity
             mainScene.entityManager.spawnAsteroid(startPosition: parentPosition, categorySize: categorySize)
         }
         
+        //Remove the parent asteroid
         mainScene.entityManager.remove(self)
     }
     
@@ -137,15 +142,16 @@ class Asteroid: GameEntity
         
         let bodyA = contact.bodyA.node?.name
         let bodyB = contact.bodyB.node?.name
-        
+  
+/*
         if bodyA == "wall" ||
             bodyB == "wall"
         {
             let mainScene = scene as! GameScene
-            self.run(mainScene.moveAndRemoveAsteroid.reversed())
+//            self.run(mainScene.moveAndRemoveAsteroid.reversed())
 
         }
-        
+*/
         if bodyA == "spaceship" ||
             bodyB == "spaceship"
         {
@@ -185,6 +191,29 @@ class Asteroid: GameEntity
  
             asteroidDust!.isHidden = false
         }
+    }
+    
+    func removeAsteroidAtBorder()
+    {
+        let pos = self.position;
+        let bottomY = -(scene?.frame.size.height)!
+        let bottomX = -(scene?.frame.size.width)!
+        
+        //print("BottomX \(bottomX) BottomY \(bottomY)")
+        
+        if pos.x < bottomX || pos.x > (scene?.frame.size.width)! ||
+            pos.y < bottomY  || pos.y > (scene?.frame.size.height)!
+            
+        {
+            let mainScene = scene as! GameScene
+            mainScene.entityManager.remove(self)
+        }
+    }
+    
+    override func update(_ delta: TimeInterval)
+    {
+
+        removeAsteroidAtBorder()
     }
     
     /*
