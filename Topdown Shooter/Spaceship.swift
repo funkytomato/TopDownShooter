@@ -11,14 +11,6 @@ import SpriteKit
 
 class Spaceship: GameEntity
 {
-    /*
-    let MaxPlayerAccel : CGFloat = 400.0;
-    let MaxPlayerSpeed : CGFloat = 200.0;
-    var _playerAccelX : CGFloat = 0;
-    var _playerAccelY : CGFloat = 0;
-    var _playerSpeedX : CGFloat = 0;
-    var _playerSpeedY : CGFloat = 0;
-    */
     
     //let rotateAngle : CGFloat = π / 4   //45 degrees
 //    let rotateAngle : CGFloat = π / 28
@@ -108,7 +100,8 @@ class Spaceship: GameEntity
         self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.width / 2)
         self.physicsBody?.allowsRotation = false
         self.physicsBody?.friction = 0.3
-        self.physicsBody?.linearDamping = 1.1
+        self.physicsBody?.linearDamping = 0.5
+        self.physicsBody?.angularDamping = 0.5
         self.physicsBody?.restitution = 0.7
         self.physicsBody?.mass = 0.4
         
@@ -116,8 +109,9 @@ class Spaceship: GameEntity
         self.physicsBody?.categoryBitMask = PhysicsCollisionBitMask.Player
         
         //Defines what logical 'categories' of bodies this body responds to collisions with. Defaults to all bits set (all categories).
-        self.physicsBody?.collisionBitMask = PhysicsCollisionBitMask.Asteroid | PhysicsCollisionBitMask.Alien | PhysicsCollisionBitMask.Ufo
-
+        //self.physicsBody?.collisionBitMask = PhysicsCollisionBitMask.Asteroid | PhysicsCollisionBitMask.Alien | PhysicsCollisionBitMask.Ufo
+        self.physicsBody?.collisionBitMask = 0
+        
         //Defines what logical 'categories' of bodies this body generates intersection notifications with. Defaults to all bits cleared (no categories).
         self.physicsBody?.contactTestBitMask = PhysicsCollisionBitMask.Asteroid | PhysicsCollisionBitMask.Alien
         self.physicsBody?.affectedByGravity = false
@@ -130,9 +124,9 @@ class Spaceship: GameEntity
         let bodyA = contact.bodyA.node?.name
         let bodyB = contact.bodyB.node?.name
         
-        print("body\(body)")
-        print("contact A\(contact.bodyA.node?.name)")
-        print("contact B\(contact.bodyB.node?.name)")
+        //print("body\(body)")
+        //print("contact A\(contact.bodyA.node?.name)")
+        //print("contact B\(contact.bodyB.node?.name)")
         
         if bodyA == "asteroid" ||
            bodyB == "asteroid"
@@ -177,11 +171,10 @@ class Spaceship: GameEntity
         
         thrusterPlasma?.particleBirthRate = 1000
         
-        let dx = (30 * cos(heading()))
-        let dy = (30 * sin(heading()))
+        let dx = (50 * cos(heading()))
+        let dy = (50 * sin(heading()))
         
         let impulse = CGVector(dx: dx, dy: dy)
-        
         self.physicsBody?.applyImpulse(impulse)
 
         //Limit spaceship's speed
@@ -195,7 +188,7 @@ class Spaceship: GameEntity
             self.physicsBody?.velocity = CGVector(dx: (self.physicsBody?.velocity.dx)!, dy: 500)
         }
         
-        self.rotateToVelocity(impulse, rate: 5.0)
+        //self.rotateToVelocity(impulse, rate: 5.0)
         
     }
     
@@ -264,6 +257,8 @@ class Spaceship: GameEntity
         {
             rotateRight()
         }
+
+        print("spaceship velocity: \(self.physicsBody!.velocity)")
         
         if isThrusting
         {
