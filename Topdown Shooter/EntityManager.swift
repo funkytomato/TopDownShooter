@@ -40,10 +40,16 @@ class EntityManager
 {
     
     
+    //Game Scene
+    let scene: SKScene
+    
+    
+    //Movement actions
+    var moveAndRemoveAlien = SKAction()
     var moveAndRemoveAsteroid = SKAction()
     var moveAndRemoveLaser = SKAction()
-    
-    let scene: SKScene
+    var createAndRemoveExplosion = SKAction()
+
     
     //Scene Layers NOT USED AT THE MO
     let bulletLayerNode = SKNode()
@@ -54,6 +60,36 @@ class EntityManager
     init(scene: SKScene)
     {
         self.scene = scene
+    }
+    
+    func createActions()
+    {
+        //The Alien creation and deletion sequence
+        let alienDistance = CGFloat(scene.frame.width)
+        let moveAlien = SKAction.moveBy(x: -alienDistance - 200, y: 0, duration: TimeInterval(0.008 * alienDistance))
+        let removeAlien = SKAction.removeFromParent()
+        //moveAndRemoveAlien = SKAction.sequence([alienshipSound, moveAlien, removeAlien])
+        moveAndRemoveAlien = SKAction.sequence([moveAlien, removeAlien])
+        
+        /*
+        //The Asteroid creation and deletion sequence
+        let asteroidDistance = CGFloat(scene.frame.height)
+        let asteroidRotation = SKAction.rotate(byAngle: -CGFloat.pi * 2, duration: TimeInterval(0.008 * asteroidDistance))
+        let moveAsteroid = SKAction.moveBy(x: 0, y: -asteroidDistance - 100, duration: TimeInterval(0.008 * asteroidDistance))
+        let removeAsteroid = SKAction.removeFromParent()
+        
+        //Group movement and rotation to run sychronously
+        let rotateAndMove = SKAction.group([asteroidRotation, moveAsteroid])
+        //moveAndRemoveAsteroid = SKAction.sequence([rockFallingSound, rotateAndMove, removeAsteroid])
+        moveAndRemoveAsteroid = SKAction.sequence([rotateAndMove, removeAsteroid])
+        
+        
+        //The Laser creation and deletion sequence
+        let laserDistance = CGFloat(scene.frame.width)
+        let moveLaser = SKAction.moveBy(x: laserDistance + 50, y: 0, duration: TimeInterval(0.008 * laserDistance))
+        let removeLaser = SKAction.removeFromParent()
+        moveAndRemoveLaser = SKAction.sequence([moveLaser, removeLaser])
+        */
     }
     
     //Add Entity to the game world
@@ -71,7 +107,14 @@ class EntityManager
     
     func update(_ deltaTime: CFTimeInterval)
     {
-        //Only applicable for updating GKEntity
+        
+        
+        scene.enumerateChildNodes(withName: "asteroid", using: ({
+            (node, error) in
+            let asteroid = node as! Asteroid
+            asteroid.update(deltaTime)
+        }))
+
     }
     
     /*
@@ -85,37 +128,53 @@ class EntityManager
     }
     
     /*
-     Create and add an asteroid to the location specified by the SKS file.
+     Create and add an asteroid to the given location
      */
     func spawnAsteroid(startPosition: CGPoint, categorySize: CategorySize)
     {
+        var spawnPosition = CGPoint.zero
         
-        
-        let randomSpeed = random(min: 0.0, max: 5)
+        if startPosition == CGPoint.zero
+        {
+            let posX = random(min: -500, max: scene.size.width / 2)
+            let posY = random(min: -500, max: scene.size.height / 2)
+            spawnPosition = CGPoint(x: posX, y: posY)
+        }
+        else
+        {
+            spawnPosition = startPosition
+        }
+            
+        let randomSpeed = random(min: 10, max: 1000)
         //print("randomSpeed\(randomSpeed)")
         
         
-        let asteroidNode = Asteroid(entityPosition: startPosition, categorySize: categorySize)
+        let asteroidNode = Asteroid(entityPosition: spawnPosition, categorySize: categorySize)
         add(asteroidNode)
         
         
-        let asteroidDir : CGFloat = randomDirection(minAngle: 0, maxAngle: 250)
+        let asteroidDistance = CGFloat(scene.frame.width * 2)
+        let asteroidDir : CGFloat = randomDirection(minAngle: 0, maxAngle: 259)
+        asteroidNode.physicsBody?.velocity = (CGVector(dx: cos(asteroidDir) * randomSpeed, dy: sin(asteroidDir) * randomSpeed))
+        
+        //asteroidNode.physicsBody?.applyForce(CGVector(dx: cos(asteroidDir) * 1000 * randomSpeed, dy: sin(asteroidDir) * 1000 * randomSpeed))
+        //print("Force velocity dx:\(cos(asteroidDir) * 1000 * randomSpeed) dy:\(sin(asteroidDir) * 1000 * randomSpeed)")
         
         //The Asteroid creation and deletion sequence
-        let asteroidDistance = CGFloat(scene.frame.width * 2)
+        //let asteroidDistance = CGFloat(scene.frame.width * 2)
         let asteroidRotation = SKAction.rotate(byAngle: -CGFloat.pi * 2, duration: TimeInterval(0.008 * asteroidDistance))
         let moveAsteroid = SKAction.moveBy(x: cos(asteroidDir) * 1000, y: sin(asteroidDir) * 1000, duration: TimeInterval(0.008 * asteroidDistance))
         let actionSpeed =  SKAction.speed(by: randomSpeed, duration: 0)
         
         let removeAsteroid = SKAction.removeFromParent()
         
-        print("Asteroid direction dx: \(cos(asteroidDir) * 1000) dy: \(sin(asteroidDir) * 1000)")
+        //print("Asteroid direction dx: \(cos(asteroidDir) * 1000) dy: \(sin(asteroidDir) * 1000)")
         
         //Group movement and rotation to run sychronously
         let rotateAndMove = SKAction.group([asteroidRotation, moveAsteroid])
-        moveAndRemoveAsteroid = SKAction.sequence([actionSpeed, rotateAndMove])
+        moveAndRemoveAsteroid = SKAction.sequence([actionSpeed, rotateAndMove, removeAsteroid])
         
-        asteroidNode.run(moveAndRemoveAsteroid)
+       // asteroidNode.run(moveAndRemoveAsteroid)
         
     }
     
@@ -169,7 +228,7 @@ class EntityManager
 
         
         //Define the target point
-        let laserDistance = CGFloat(2000)
+        let laserDistance = CGFloat(200)
         let dx = (laserDistance * cos(node.heading()))
         let dy = (laserDistance * sin(node.heading()))
         
@@ -198,7 +257,7 @@ class EntityManager
         //Create the physics body
         laser.physicsBody = SKPhysicsBody(rectangleOf: laser.size)
         laser.physicsBody?.allowsRotation = false
-        laser.physicsBody?.isDynamic = false
+        laser.physicsBody?.isDynamic = true
         laser.physicsBody?.affectedByGravity = false
         laser.physicsBody?.usesPreciseCollisionDetection = true
         laser.physicsBody?.velocity = CGVector.zero                 //Ensure sprite is not moving before executing SKAction
@@ -211,11 +270,17 @@ class EntityManager
 
         
         //Set the laser action running
-        laser.run(moveAndRemoveLaser)
-
+        //laser.run(moveAndRemoveLaser)
+        
         
         add(laser)
 
+        
+        let impulse = CGVector(dx: dx, dy: dy)
+        let shipSpeed = node.physicsBody?.velocity
+        let laserSpeed = impulse + shipSpeed!
+        print("Impulse\(impulse)")
+        laser.physicsBody?.applyForce(impulse)
     }
     
     
