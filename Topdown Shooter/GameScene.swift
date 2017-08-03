@@ -27,7 +27,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     var repeatActionPlayer = SKAction()
     var player: Spaceship!
     
-
     
     //Explosion
     var explosionAtlas: SKTextureAtlas?
@@ -41,11 +40,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     let shootSound = SKAction.playSoundFileNamed("151024__bubaproducer__laser-shot-small-2", waitForCompletion: false)
 
     //Movement actions
-    var moveAndRemoveAlien = SKAction()
+ /*   var moveAndRemoveAlien = SKAction()
     var moveAndRemoveAsteroid = SKAction()
     var moveAndRemoveLaser = SKAction()
+ */
     var createAndRemoveExplosion = SKAction()
-    
     
     func loadSceneNodes()
     {
@@ -70,9 +69,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate
 
     override func sceneDidLoad()
     {
-        print("sceneDidLoad")
+        //print("sceneDidLoad")
         
-        self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
+        //Create physics body for the game world
+        //self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
         self.physicsWorld.contactDelegate = self
 
         self.lastUpdateTime = 0
@@ -138,7 +138,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         //Sequence creation and removal
         createAndRemoveExplosion = SKAction.sequence([createExplosion, explosionRemoval])
         
-        createActions()
+        //createActions()
     }
 
     func createExplosion(nodeToExplode: SKNode)
@@ -146,7 +146,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         nodeToExplode.run(createAndRemoveExplosion)
     }
-    
+ /*
     func createActions()
     {
         //The Alien creation and deletion sequence
@@ -178,7 +178,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         moveAndRemoveLaser = SKAction.sequence([moveLaser, removeLaser])
 
     }
-    
+ */   
     func touchDown(atPoint pos : CGPoint)
     {
 
@@ -196,6 +196,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
     {
+        
         
         for touch in touches
         {
@@ -231,7 +232,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate
                 }
                 else if node.name == "minusBtn"
                 {
-                    entityManager.spawnLaser(nodeFiredFrom: player)
+                    player.isShooting = true
+                    //entityManager.spawnLaser(nodeFiredFrom: player)
                 }
             }
         }
@@ -251,6 +253,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         player.isReversing = false
         player.isTurningLeft = false
         player.isTurningRight = false
+        player.isShooting = false
         
         //Turn the thruster emitter particle effects down
         player.thrusterPlasma?.particleBirthRate = 15
@@ -278,6 +281,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
 
         
         player.update(dt)
+        entityManager.update(dt)
 
         
         self.lastUpdateTime = currentTime
@@ -290,6 +294,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate
 
         player.configureSpaceship()
    //     encounterManager.addEncountersToWorld(world: self)
+        
+        let position = CGPoint.zero
+        
+        //Create aliens and asteroids
+        let spawn = SKAction.run({
+            () in
+            //self.addChild(self.createAliens())
+            self.entityManager.spawnAsteroid(startPosition: position, categorySize: CategorySize.Big)
+        })
+        
+        
+        //Main gaame loop
+        let delay = SKAction.wait(forDuration: 5)
+        let SpawnDelay = SKAction.sequence([spawn, delay])
+        let spawnDelayForever = SKAction.repeatForever(SpawnDelay)
+        self.run(spawnDelayForever)
     }
   
     func didBegin(_ contact: SKPhysicsContact)
