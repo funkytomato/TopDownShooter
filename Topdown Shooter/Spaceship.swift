@@ -21,6 +21,7 @@ class Spaceship: GameEntity
     var isTurningRight = false
     var isThrusting = false
     var isReversing = false
+    var isShooting = false
  
     let ventingPlasma = SKEmitterNode(fileNamed: "ventingPlasma.sks")
     let thrusterPlasma = SKEmitterNode(fileNamed: "EngineFlare.sks")
@@ -245,6 +246,12 @@ class Spaceship: GameEntity
     }
 
 
+    func shooting()
+    {
+        let mainScene = scene as! GameScene
+        mainScene.entityManager.spawnLaser(nodeFiredFrom: self)
+    }
+    
     override func update(_ delta: TimeInterval)
     {
  //       self.rotateToVelocity((self.physicsBody?.velocity)!, rate: 1)
@@ -267,6 +274,11 @@ class Spaceship: GameEntity
         else if isReversing
         {
             reverseThrust()
+        }
+        
+        if isShooting
+        {
+            shooting()
         }
     }
 }
