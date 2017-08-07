@@ -306,7 +306,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         
         //Main gaame loop
-        let delay = SKAction.wait(forDuration: 1.5)
+        let delay = SKAction.wait(forDuration: 0.5)
         let SpawnDelay = SKAction.sequence([spawn, delay])
         let spawnDelayForever = SKAction.repeatForever(SpawnDelay)
         self.run(spawnDelayForever)
@@ -337,7 +337,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             }
         }
         
-        
+      
         if firstBody.categoryBitMask == PhysicsCollisionBitMask.Laser && secondBody.categoryBitMask == PhysicsCollisionBitMask.Asteroid ||
             firstBody.categoryBitMask == PhysicsCollisionBitMask.Asteroid && secondBody.categoryBitMask == PhysicsCollisionBitMask.Laser
         {
@@ -355,6 +355,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate
                 let nodeB = contact.bodyB.node as? Asteroid
                 nodeB?.collidedWith(secondBody, contact: contact)
                 firstBody.node?.removeFromParent()
+                
+            }
+        }
+        
+        
+        /*
+         An Asteroid collided with the spaceship shield
+         */
+        if firstBody.categoryBitMask == PhysicsCollisionBitMask.Shield && secondBody.categoryBitMask == PhysicsCollisionBitMask.Asteroid ||
+            firstBody.categoryBitMask == PhysicsCollisionBitMask.Asteroid && secondBody.categoryBitMask == PhysicsCollisionBitMask.Shield
+        {
+            //Asteroid hit shield
+            
+            if contact.bodyA.node?.name == "shield"
+            {
+                let nodeA = contact.bodyA.node as? Shield
+                nodeA?.collidedWith(firstBody, contact: contact)
+                //secondBody.node?.removeFromParent()
+                
+            }
+            else if contact.bodyB.node?.name == "shield"
+            {
+                let nodeB = contact.bodyB.node as? Shield
+                nodeB?.collidedWith(secondBody, contact: contact)
+                //firstBody.node?.removeFromParent()
 
             }
         }
