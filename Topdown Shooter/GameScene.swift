@@ -306,7 +306,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         
         //Main gaame loop
-        let delay = SKAction.wait(forDuration: 5)
+        let delay = SKAction.wait(forDuration: 1.5)
         let SpawnDelay = SKAction.sequence([spawn, delay])
         let spawnDelayForever = SKAction.repeatForever(SpawnDelay)
         self.run(spawnDelayForever)
