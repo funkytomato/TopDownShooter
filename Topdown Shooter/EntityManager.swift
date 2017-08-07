@@ -23,6 +23,7 @@ struct PhysicsCollisionBitMask
     static let Laser:UInt32 = 0x1 << 4
     static let Ufo:UInt32 = 0x1 << 5
     static let Wall:UInt32 = 0x1 << 6
+    static let Shield:UInt32 = 0x1 << 7
 }
 
 struct GameZLayer
@@ -56,9 +57,16 @@ class EntityManager
     let particleLayerNode = SKNode()
     
 
+    //Create predefined spawn locations for asteroids
+    //Randomise the direction and speed
+    var asteroidSpawnLocations : [CGPoint] = []
+
     
     init(scene: SKScene)
     {
+        
+        var newStartLocation = CGPoint(x: scene.size.width / 2,y: scene.size.height / 2)
+        asteroidSpawnLocations.append(newStartLocation)
         self.scene = scene
     }
     
@@ -136,15 +144,19 @@ class EntityManager
         
         if startPosition == CGPoint.zero
         {
-            let posX = random(min: -500, max: scene.size.width / 2)
-            let posY = random(min: -500, max: scene.size.height / 2)
-            spawnPosition = CGPoint(x: posX, y: posY)
+            //let posX = random(min: 0 - scene.size.width, max: scene.size.width)
+            //let posY = random(min: 0 - scene.size.width, max: scene.size.height)
+            //spawnPosition = CGPoint(x: posX, y: posY)
+            
+            spawnPosition = asteroidSpawnLocations.first!
         }
         else
         {
             spawnPosition = startPosition
         }
-            
+        
+        print("spawnPosition: \(spawnPosition)")
+        
         let randomSpeed = random(min: 10, max: 1000)
         //print("randomSpeed\(randomSpeed)")
         
@@ -154,7 +166,9 @@ class EntityManager
         
         
         let asteroidDistance = CGFloat(scene.frame.width * 2)
-        let asteroidDir : CGFloat = randomDirection(minAngle: 0, maxAngle: 259)
+        let asteroidDir : CGFloat = randomDirection(minAngle: 180, maxAngle: 275)
+        print("asteroidDir:\(asteroidDir)")
+        
         asteroidNode.physicsBody?.velocity = (CGVector(dx: cos(asteroidDir) * randomSpeed, dy: sin(asteroidDir) * randomSpeed))
         
         //asteroidNode.physicsBody?.applyForce(CGVector(dx: cos(asteroidDir) * 1000 * randomSpeed, dy: sin(asteroidDir) * 1000 * randomSpeed))
@@ -177,7 +191,66 @@ class EntityManager
        // asteroidNode.run(moveAndRemoveAsteroid)
         
     }
-    
+/*
+    /*
+     Shoot gun from any angle
+    */
+    func getAsteroidPath(startPosition: CGPoint)
+    {
+        let Margin : CGFloat = 20.0;
+        
+        //CGPoint location = [touch locationInNode:self];
+        
+        //diff is the destination of asteroid
+        CGPoint diff = CGPointMake(location.x - _touchLocation.x, location.y - _float diffLength = sqrtf(diff.x*diff.x + diff.y*diff.y);
+        
+        float angle = atan2f(diff.y, diff.x);
+        _playerMissileSprite.zRotation = angle - SK_DEGREES_TO_RADIANS(90.0f);
+        _playerMissileSprite.position = _playerSprite.position;
+        _playerMissileSprite.hidden = NO;
+        float adjacent, opposite;
+        CGPoint destination;
+        
+        /*
+         You have actively divided the screen into four sections, like slices of a pie:
+         Each of these sections calculates a slightly different destination point.
+         Notice that the code for shooting left comes last, because here you have the
+         issue of switching from +180 to -180 degrees again (recall that this is the
+         range of values that atan2() returns).
+         Now you should be able to fire in any direction! Build and run and give it a
+         try.
+         */
+        if (angle <= -M_PI_4 && angle > -3.0 * M_PI_4)
+        {
+            // Shoot down
+            angle = M_PI_2 - angle;
+            adjacent = _playerMissileSprite.position.y + Margin;
+            opposite = tanf(angle) * adjacent;
+            destination = CGPointMake(_playerMissileSprite.position.x - opposite, -Margin);
+        }
+        else if (angle > M_PI_4 && angle <= 3.0 * M_PI_4)
+        {
+            // Shoot up
+            angle = M_PI_2 - angle;
+            adjacent = _winSize.height - _playerMissileSprite.position.y + Margin;
+            opposite = tanf(angle) * adjacent;
+            destination = CGPointMake(_playerMissileSprite.position.x + opposite, _winSize.}
+        else if (angle <= M_PI_4 && angle > -M_PI_4)
+        {
+            // Shoot right
+            adjacent = _winSize.width - _playerMissileSprite.position.x + Margin;
+            opposite = tanf(angle) * adjacent;
+            destination = CGPointMake(_winSize.width + Margin, _playerMissileSprite.position.}
+    }
+        else // angle > 3.0f * M_PI_4 || angle <= -3.0f * M_PI_4
+        {
+            // Shoot left
+            adjacent = _playerMissileSprite.position.x + Margin;
+            opposite = tanf(angle) * adjacent;
+            destination = CGPointMake(-Margin, _playerMissileSprite.position.y - opposite);
+        }
+    }
+ */
     
     func randomDirection(minAngle: UInt32, maxAngle: UInt32) -> CGFloat
     {
