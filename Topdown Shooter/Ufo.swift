@@ -67,9 +67,9 @@ class Ufo: GameEntity
         let bodyA = contact.bodyA.node?.name
         let bodyB = contact.bodyB.node?.name
         
-        print("body\(body)")
-        print("contact A\(contact.bodyA.node?.name)")
-        print("contact B\(contact.bodyB.node?.name)")
+        //print("body\(body)")
+        //print("contact A\(contact.bodyA.node?.name)")
+        //print("contact B\(contact.bodyB.node?.name)")
         
         if bodyA == "asteroid" ||
             bodyB == "asteroid"
