@@ -121,7 +121,7 @@ class Asteroid: GameEntity
         
         //Create a random number of asteroids
         let asteroidNumber = random(min: 2, max: 10)
-        print("asteroid Number \(asteroidNumber)")
+        //print("asteroid Number \(asteroidNumber)")
         
         //Get pointer the game scene
         let mainScene = scene as! GameScene
@@ -129,7 +129,7 @@ class Asteroid: GameEntity
         
         for i in 0 ... asteroidNumber-1
         {
-            print("Creating asteroid \(i)")
+            //print("Creating asteroid \(i)")
             mainScene.entityManager.spawnAsteroid(startPosition: parentPosition, categorySize: categorySize)
         }
         
@@ -196,13 +196,13 @@ class Asteroid: GameEntity
     func removeAsteroidAtBorder()
     {
         let pos = self.position;
-        let bottomY = -(scene?.frame.size.height)!
-        let bottomX = -(scene?.frame.size.width)!
+        let bottomY = -((scene?.frame.size.height)! * 2)
+        let bottomX = -((scene?.frame.size.width)! * 2)
         
         //print("BottomX \(bottomX) BottomY \(bottomY)")
         
-        if pos.x < bottomX || pos.x > (scene?.frame.size.width)! ||
-            pos.y < bottomY  || pos.y > (scene?.frame.size.height)!
+        if pos.x < bottomX || pos.x > ((scene?.frame.size.width)! * 2) ||
+            pos.y < bottomY  || pos.y > ((scene?.frame.size.height)! * 2)
             
         {
             let mainScene = scene as! GameScene
