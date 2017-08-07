@@ -26,6 +26,7 @@ class Spaceship: GameEntity
     let ventingPlasma = SKEmitterNode(fileNamed: "ventingPlasma.sks")
     let thrusterPlasma = SKEmitterNode(fileNamed: "EngineFlare.sks")
     var healthBar : HealthBar?
+    var shield : Shield?
     
     
     var moveAndRemoveLaser = SKAction()
@@ -33,6 +34,8 @@ class Spaceship: GameEntity
     required init?(coder aDecoder: NSCoder)
     {
         healthBar = HealthBar()
+        //shield = Shield(size: CGSize(width: 200, height: 200))
+        shield = Shield(size: CGSize(width: 0.0, height: 0.0))
         super.init(coder:aDecoder)
     }
     
@@ -66,6 +69,7 @@ class Spaceship: GameEntity
         configureVentPlasma()
         configureCollisionBody()
         configureHealthBar()
+        configureShield()
     }
     
     func configureVentPlasma()
@@ -93,6 +97,15 @@ class Spaceship: GameEntity
         healthBar = HealthBar(size: self.size, barOffset: 25)
         healthBar?.zPosition = GameZLayer.HUD
         addChild(healthBar!)
+    }
+    
+    func configureShield()
+    {
+        //Configure the health bar
+        let shieldSize = CGSize(width: self.size.width * 2.3, height: self.size.height * 2.3)
+        shield = Shield(size: shieldSize)
+        shield?.zPosition = GameZLayer.Player
+        addChild(shield!)
     }
     
     func configureCollisionBody()
