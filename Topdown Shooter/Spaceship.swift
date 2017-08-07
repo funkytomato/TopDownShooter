@@ -34,7 +34,6 @@ class Spaceship: GameEntity
     required init?(coder aDecoder: NSCoder)
     {
         healthBar = HealthBar()
-        //shield = Shield(size: CGSize(width: 200, height: 200))
         shield = Shield(size: CGSize(width: 0.0, height: 0.0))
         super.init(coder:aDecoder)
     }
@@ -63,13 +62,18 @@ class Spaceship: GameEntity
         
     }
 
+    /*
+     The order these elements are intialised is important!
+     
+     */
     func configureSpaceship()
     {
+        configureShield()
         configureThrusterPlasma()
         configureVentPlasma()
         configureCollisionBody()
         configureHealthBar()
-        configureShield()
+
     }
     
     func configureVentPlasma()
@@ -123,8 +127,8 @@ class Spaceship: GameEntity
         self.physicsBody?.categoryBitMask = PhysicsCollisionBitMask.Player
         
         //Defines what logical 'categories' of bodies this body responds to collisions with. Defaults to all bits set (all categories).
-        //self.physicsBody?.collisionBitMask = PhysicsCollisionBitMask.Asteroid | PhysicsCollisionBitMask.Alien | PhysicsCollisionBitMask.Ufo
-        self.physicsBody?.collisionBitMask = 0
+        self.physicsBody?.collisionBitMask = PhysicsCollisionBitMask.Asteroid | PhysicsCollisionBitMask.Alien | PhysicsCollisionBitMask.Ufo
+        //self.physicsBody?.collisionBitMask = 0
         
         //Defines what logical 'categories' of bodies this body generates intersection notifications with. Defaults to all bits cleared (no categories).
         self.physicsBody?.contactTestBitMask = PhysicsCollisionBitMask.Asteroid | PhysicsCollisionBitMask.Alien
@@ -278,7 +282,7 @@ class Spaceship: GameEntity
             rotateRight()
         }
 
-        print("spaceship velocity: \(self.physicsBody!.velocity)")
+        //print("spaceship velocity: \(self.physicsBody!.velocity)")
         
         if isThrusting
         {
