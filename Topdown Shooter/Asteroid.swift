@@ -100,10 +100,10 @@ class Asteroid: GameEntity
         self.physicsBody?.categoryBitMask = PhysicsCollisionBitMask.Asteroid
         
         //Defines what logical 'categories' of bodies this body responds to collisions with. Defaults to all bits set (all categories).
-        self.physicsBody?.collisionBitMask = PhysicsCollisionBitMask.Asteroid
+        self.physicsBody?.collisionBitMask = PhysicsCollisionBitMask.Asteroid | PhysicsCollisionBitMask.Shield
         
         //Defines what logical 'categories' of bodies this body generates intersection notifications with. Defaults to all bits cleared (no categories).
-        self.physicsBody?.contactTestBitMask = PhysicsCollisionBitMask.Player | PhysicsCollisionBitMask.Alien | PhysicsCollisionBitMask.Laser
+        self.physicsBody?.contactTestBitMask = PhysicsCollisionBitMask.Player | PhysicsCollisionBitMask.Alien | PhysicsCollisionBitMask.Laser | PhysicsCollisionBitMask.Shield
 
     }
    
