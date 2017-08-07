@@ -20,7 +20,6 @@
 		A835E73D1F20E0A200904228 /* Topdown_ShooterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A835E73C1F20E0A200904228 /* Topdown_ShooterTests.swift */; };
 		A835E7591F20E23100904228 /* kenvector_future_thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A835E7571F20E23100904228 /* kenvector_future_thin.ttf */; };
 		A835E75A1F20E23100904228 /* kenvector_future.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A835E7581F20E23100904228 /* kenvector_future.ttf */; };
-		A838D3D61F2358C600F9947B /* EncounterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A838D3D51F2358C600F9947B /* EncounterManager.swift */; };
 		A838D3DC1F235AC000F9947B /* GameEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A838D3D81F235AC000F9947B /* GameEntity.swift */; };
 		A838D3DD1F235AC000F9947B /* Spaceship.swift in Sources */ = {isa = PBXBuildFile; fileRef = A838D3D91F235AC000F9947B /* Spaceship.swift */; };
 		A838D3DE1F235AC000F9947B /* Asteroid.swift in Sources */ = {isa = PBXBuildFile; fileRef = A838D3DA1F235AC000F9947B /* Asteroid.swift */; };
@@ -42,6 +41,7 @@
 		A838D4031F2394F800F9947B /* pew2.wav in Resources */ = {isa = PBXBuildFile; fileRef = A838D3F81F2394F800F9947B /* pew2.wav */; };
 		A838D4041F2394F800F9947B /* spawn.wav in Resources */ = {isa = PBXBuildFile; fileRef = A838D3F91F2394F800F9947B /* spawn.wav */; };
 		A838D4061F23A70100F9947B /* Explosions.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A838D4051F23A70100F9947B /* Explosions.atlas */; };
+		A843A2C61F38C12C000F2E32 /* EncounterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A843A2C51F38C12C000F2E32 /* EncounterManager.swift */; };
 		A851A8E81F3613EF00524F48 /* Shield.swift in Sources */ = {isa = PBXBuildFile; fileRef = A851A8E71F3613EF00524F48 /* Shield.swift */; };
 		A856C72D1F2B6A0E0004C44A /* ventingPlasma.sks in Resources */ = {isa = PBXBuildFile; fileRef = A856C7291F2B6A0E0004C44A /* ventingPlasma.sks */; };
 		A856C72E1F2B6A0E0004C44A /* enemyDeath.sks in Resources */ = {isa = PBXBuildFile; fileRef = A856C72A1F2B6A0E0004C44A /* enemyDeath.sks */; };
@@ -96,7 +96,6 @@
 		A835E73E1F20E0A200904228 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A835E7571F20E23100904228 /* kenvector_future_thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = kenvector_future_thin.ttf; sourceTree = "<group>"; };
 		A835E7581F20E23100904228 /* kenvector_future.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = kenvector_future.ttf; sourceTree = "<group>"; };
-		A838D3D51F2358C600F9947B /* EncounterManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EncounterManager.swift; path = ../EncounterManager.swift; sourceTree = "<group>"; };
 		A838D3D81F235AC000F9947B /* GameEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameEntity.swift; sourceTree = "<group>"; };
 		A838D3D91F235AC000F9947B /* Spaceship.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spaceship.swift; sourceTree = "<group>"; };
 		A838D3DA1F235AC000F9947B /* Asteroid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Asteroid.swift; sourceTree = "<group>"; };
@@ -118,6 +117,7 @@
 		A838D3F81F2394F800F9947B /* pew2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = pew2.wav; sourceTree = "<group>"; };
 		A838D3F91F2394F800F9947B /* spawn.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = spawn.wav; sourceTree = "<group>"; };
 		A838D4051F23A70100F9947B /* Explosions.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Explosions.atlas; sourceTree = "<group>"; };
+		A843A2C51F38C12C000F2E32 /* EncounterManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EncounterManager.swift; sourceTree = "<group>"; };
 		A851A8E71F3613EF00524F48 /* Shield.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shield.swift; sourceTree = "<group>"; };
 		A856C7291F2B6A0E0004C44A /* ventingPlasma.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ventingPlasma.sks; sourceTree = "<group>"; };
 		A856C72A1F2B6A0E0004C44A /* enemyDeath.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = enemyDeath.sks; sourceTree = "<group>"; };
@@ -274,7 +274,7 @@
 		A838D3E61F23618C00F9947B /* Game Logic */ = {
 			isa = PBXGroup;
 			children = (
-				A838D3D51F2358C600F9947B /* EncounterManager.swift */,
+				A843A2C51F38C12C000F2E32 /* EncounterManager.swift */,
 				A835E7271F20E0A200904228 /* GameScene.swift */,
 			);
 			name = "Game Logic";
@@ -446,6 +446,7 @@
 			files = (
 				A838D3E81F2367E800F9947B /* EntityManager.swift in Sources */,
 				A8EA55D51F25378100DD99D0 /* SKTAudio.swift in Sources */,
+				A843A2C61F38C12C000F2E32 /* EncounterManager.swift in Sources */,
 				A8EA55D71F25378100DD99D0 /* SKTTimingFunctions.swift in Sources */,
 				A838D3DD1F235AC000F9947B /* Spaceship.swift in Sources */,
 				A838D3E11F235AF700F9947B /* HealthBar.swift in Sources */,
@@ -458,7 +459,6 @@
 				A835E7221F20E0A200904228 /* AppDelegate.swift in Sources */,
 				A8EA55CF1F25378000DD99D0 /* CGVector+Extensions.swift in Sources */,
 				A8EA55D01F25378000DD99D0 /* Int+Extensions.swift in Sources */,
-				A838D3D61F2358C600F9947B /* EncounterManager.swift in Sources */,
 				A8EA55D11F25378000DD99D0 /* SKAction+Extensions.swift in Sources */,
 				A851A8E81F3613EF00524F48 /* Shield.swift in Sources */,
 				A8EA55D41F25378100DD99D0 /* SKNode+Extensions.swift in Sources */,
